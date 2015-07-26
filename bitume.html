@@ -5,6 +5,57 @@
 	<meta charset='utf-8'/>
 	<link rel='stylesheet' href='bitume.css'/>
 	<script>
+
+var MODIFS = {
+	FO:0, AG:0, RA:0, EN:0,
+	PR:0, PE:0, IN:0, BE:0,
+}
+
+var POINTS = {
+	FO:5, AG:5, RA:5, EN:5,
+	PR:5, PE:5, IN:5, BE:5,
+}
+
+var PC = {
+	gender: "female",
+	FO: 5,
+	AG: 5,
+};
+
+function dumpPC() {
+	console.log(
+		 'FO:'+PC.FO+' AG:'+PC.AG+' RA:'+PC.RA+' EN:'+PC.EN
+		+'PR:'+PC.PR+' PE:'+PC.PE+' IN:'+PC.IN+' BE:'+PC.BE
+	);
+}
+function updatePC() {
+	PC.FO = POINTS.FO + MODIFS.FO;
+	PC.AG = POINTS.AG + MODIFS.AG;
+	PC.RA = POINTS.RA + MODIFS.RA;
+	PC.EN = POINTS.EN + MODIFS.EN;
+	PC.PR = POINTS.PR + MODIFS.PR;
+	PC.PE = POINTS.PE + MODIFS.PE;
+	PC.IN = POINTS.IN + MODIFS.IN;
+	PC.BE = POINTS.BE + MODIFS.BE;
+	dumpPC();
+}
+
+function onGender(selector) {
+	var new_gender = selector.value;
+	var hasChanged = new_gender != PC.gender;
+	console.log("old: "+PC.gender+" new: "+new_gender+" ? "+hasChanged);
+	if(new_gender == PC.gender) return; //nothing to do
+	PC.gender = new_gender;
+	var e = document.getElementById('FO');
+	if(PC.gender == "female") {
+		MODIFS.FO = -1;
+		MODIFS.AG = +1;
+	} else {
+		MODIFS.FO = +1;
+		MODIFS.AG = -1;
+	}
+	updatePC();
+}
 	</script>
 </head>
 <body>
@@ -39,62 +90,62 @@
 </div>
 
 <div class='column-left framed'>
-	<section name='general'>
-		<div class='x'>
+	<section id='general'>
+		<div class='attribute'>
 			<label for='name'>NOM</label>
-			<input type='text' name='name'>
+			<input type='text' id='name'>
 		</div>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='gender'>SEXE</label>
-			<select name='gender'>
+			<select id='gender' class='combobox' onchange="onGender(this)">
 				<option value='female'>Femme</option>
 				<option value='male'>Homme</option>
 			</select>
 		</div>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='tribe'>TRIBU</label>
-			<input type='text' name='tribe'>
+			<input type='text' id='tribe'>
 		</div>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='goal'>BUT</label>
-			<input type='text' name='goal'>
+			<input type='text' id='goal'>
 		</div>
 		<!-- TODO: description -->
 	</section>
 
-	<section>
+	<section id='attrs'>
 		<h2>CARACTÉRISTIQUES <br/>PRIMAIRES</h2>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='FO'>FORCE (FO)</label>
-			<input type='text' name='FO'>
+			<input id='FO' type='number' class='changer' min='1' max='9' value='5'>
 		</div>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='AG'>AGILITÉ (AG)</label>
-			<input type='text' name='AG'>
+			<input id='AG' type='number' class='changer' min='1' max='9' value='5'>
 		</div>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='RA'>RAPIDITÉ (RA)</label>
-			<input type='text' name='RA'>
+			<input id='RA' type='number' class='changer'>
 		</div>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='EN'>ENDURANCE (EN)</label>
-			<input type='text' name='EN'>
+			<input id='EN' type='number' class='changer'>
 		</div>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='PR'>PRÉCISION (PR)</label>
-			<input type='text' name='PR'>
+			<input id='PR' type='number' class='changer'>
 		</div>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='PE'>PERCEPTION (PE)</label>
-			<input type='text' name='PE'>
+			<input id='PE' type='number' class='changer'>
 		</div>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='IN'>INTELLIGENCE (IN)</label>
-			<input type='text' name='IN'>
+			<input id='IN' type='number' class='changer'>
 		</div>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='BE'>BEAUTÉ (BE)</label>
-			<input type='text' name='BE'>
+			<input id='BE' type='number' class='changer'>
 		</div>
 	</section>
 </div> <!-- end left column-->
@@ -103,28 +154,28 @@
 <div class='column-right framed'>
 	<section>
 		<h2>CARACTÉRISTIQUES <br/> SECONDAIRES</h2>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='SI'>SEUIL D'INCONSCIENCE (SI)</label>
-			<input type='text' name='SI'>
+			<input type='text' id='SI'>
 		</div>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='PV'>POINTS DE VIE (PV)</label>
-			<input type='text' name='PV'>
+			<input type='text' id='PV'>
 		</div>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='PP'>POINTS DE PRESTIGE (PP)</label>
-			<input type='text' name='PP'>
+			<input type='text' id='PP'>
 		</div>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='CH'>CHARGE (CH)</label>
-			<input type='text' name='CH'>
+			<input type='text' id='CH'>
 		</div>
 	</section>
 	<section>
 		<h2>TALENTS</h2>
-		<div class='x'>
+		<div class='attribute'>
 			<label for='ACR'>ACROBATIE (ACR)</label>
-			<input type='text' name='ACR'>
+			<input type='text' id='ACR'>
 		</div>
 	</section>
 </div> <!-- end right column-->
