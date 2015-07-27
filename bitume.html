@@ -39,26 +39,26 @@ function updatePCAttribute(id) {
 	PC[id] = POINTS[id] + MODIFS[id];
 }
 
-function onModifierChanged(modifiers, id, old_key, new_key) {
-	console.log('onModifierChanged '+old_key+'>'+new_key);
-	var value = MODIFS[id];
-	if(modifiers[old_key]) {
-		console.log('old '+id+' value: '+value);
-		console.log('old '+id+' modifier: '+modifiers[old_key][id]);
-		value -= modifiers[old_key][id];
-	}
-	console.log('new '+id+' modifier: '+modifiers[new_key][id]);
-	value += modifiers[new_key][id];
-	console.log('new '+id+' value: '+value);
-	MODIFS[id] = value;
+function updateModifier(op, modifiers, id, key) {
+	if(!modifiers[key]) return; //DO nothing
+	if(op == '-') {
+		MODIFS[id] -= modifiers[key][id];
+	} else
+	if(op == '+') {
+		MODIFS[id] += modifiers[key][id];
+	} else throw "Unknown operator \""+op+"\"";
 	updatePCAttribute(id);
 	document.getElementById(id).value = PC[id];
+}
+
+function onModifierChanged(modifiers, id, old_key, new_key) {
+	updateModifier('-', modifiers, id, old_key);
+	updateModifier('+', modifiers, id, new_key);
 }
 
 function onGender(selector) {
 	var new_gender = selector.value;
 	var hasChanged = new_gender != PC.gender;
-	console.log("old: "+PC.gender+" new: "+new_gender+" ? "+hasChanged);
 	if(new_gender == PC.gender) return; //nothing to do
 	onModifierChanged(GENDER, 'FO', PC.gender, new_gender);
 	onModifierChanged(GENDER, 'AG', PC.gender, new_gender);
