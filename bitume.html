@@ -35,11 +35,66 @@ function dumpPC() {
 		+'PR:'+PC.PR+' PE:'+PC.PE+' IN:'+PC.IN+' BE:'+PC.BE
 	);
 }
+
+function getAttributeType(id) {
+	if (id == 'FO' || id == 'AG' || id == 'RA' || id == 'EN'
+	 || id == 'PR' || id == 'PE' || id == 'IN' || id == 'BE')
+		return 'primary';
+	if (id == 'ACR' || id == 'COM' || id == 'CON')
+		return 'skill';
+	throw "Unknown attribute \""+id+"\"";
+}
+
+function getCurrentPrimaryPoints() {
+	return POINTS.FO + POINTS.AG + POINTS.RA + POINTS.EN
+		 + POINTS.PR + POINTS.PE + POINTS.IN + POINTS.BE;
+}
+
+function getAvailablePrimaryPoints() {
+	var MAXIMUM_PRIMARY_POINTS = 40;
+	return MAXIMUM_PRIMARY_POINTS - getCurrentPrimaryPoints();
+}
+
 function updatePCAttribute(id) {
 	PC[id] = POINTS[id] + MODIFS[id];
 }
 
+function getDefaultMaximum(id) {
+	var type = getAttributeType(id);
+	if (type == 'primary') return 10;
+	if (type == 'skill') return 100;
+}
+
+function getMaximum(id) {
+	var malus = 0
+	if(MODIFS[id] < 0) malus = -MODIFS[id];
+	var type = getAttributeType(id);
+	return getDefaultMaximum(id) - malus;
+}
+
+function getDefaultMinimum(id) {
+	var type = getAttributeType(id);
+	if (type == 'primary') return 1;
+	if (type == 'skill') return 0; //TODO: if skill, it's (A1+A2)/2
+}
+
+function getMinimum(id) {
+	var bonus = 0
+	if(MODIFS[id] > 0) bonus = MODIFS[id];
+	var type = getAttributeType(id);
+	return getDefaultMinimum(id) + bonus;
+}
+
+function updateMinMaxAndValue(id) {
+	var e = document.getElementById(id);
+	e.value = PC[id];
+	e.max = getMaximum(id);
+	e.min = getMinimum(id);
+	console.log("updateMinMaxAndValue("+id+") value="+e.value+" min="+e.min+" max="+e.max);
+}
+
 function updateModifier(op, modifiers, id, key) {
+	console.log("updateModifier("+op+", .., "+id+", "+key+")");
 	if(!modifiers[key]) return; //DO nothing
 	if(op == '-') {
 		MODIFS[id] -= modifiers[key][id];
@@ -48,7 +103,7 @@ function updateModifier(op, modifiers, id, key) {
 		MODIFS[id] += modifiers[key][id];
 	} else throw "Unknown operator \""+op+"\"";
 	updatePCAttribute(id);
-	document.getElementById(id).value = PC[id];
+	updateMinMaxAndValue(id);
 }
 
 function onModifierChanged(modifiers, id, old_key, new_key) {
@@ -106,11 +161,11 @@ function loadPC() {
 		<h2>CARACTÉRISTIQUES <br/>PRIMAIRES</h2>
 		<div class='attribute'>
 			<label for='FO'>FORCE (FO)</label>
-			<input id='FO' type='number' class='changer' min='1' max='9' value='5'>
+			<input id='FO' type='number' class='changer' min='1' max='10' value='5'>
 		</div>
 		<div class='attribute'>
 			<label for='AG'>AGILITÉ (AG)</label>
-			<input id='AG' type='number' class='changer' min='1' max='9' value='5'>
+			<input id='AG' type='number' class='changer' min='1' max='10' value='5'>
 		</div>
 		<div class='attribute'>
 			<label for='RA'>RAPIDITÉ (RA)</label>
