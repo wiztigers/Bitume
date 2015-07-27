@@ -98,7 +98,8 @@ function getMinimum(id) {
 function updateMinMaxAndValue(id) {
 	var e = document.getElementById(id);
 	e.value = PC[id];
-	e.max = getMaximum(id);
+	var max = e.valueAsNumber + getAvailablePrimaryPoints();
+	e.max = Math.min(getMaximum(id), max);
 	e.min = getMinimum(id);
 }
 
@@ -128,15 +129,25 @@ function onGender(selector) {
 	PC.gender = new_gender;
 }
 
-function loadPC() {
-	var gender = document.getElementById('gender').value;
-	onGender(document.getElementById('gender'));
+function updatePC() {
 	for (var i = 0; i < ATTRIBUTES['primary'].length; i++) {
 		var id = ATTRIBUTES['primary'][i];
 		updatePCAttribute(id);
 		updateMinMaxAndValue(id);
 	}
-	dumpPC();
+}
+
+function onAttribute(selector) {
+	POINTS[selector.id] = selector.valueAsNumber;
+	console.log("onAttribute("+selector.id+"): "+POINTS[selector.id]+", available="+getAvailablePrimaryPoints());
+	updatePCAttribute(selector.id);
+	updatePC();
+}
+
+function loadPC() {
+	var gender = document.getElementById('gender').value;
+	onGender(document.getElementById('gender'));
+	updatePC();
 }
 	</script>
 </head>
@@ -174,35 +185,35 @@ function loadPC() {
 		<h2>CARACTÉRISTIQUES <br/>PRIMAIRES</h2>
 		<div class='attribute'>
 			<label for='FO'>FORCE (FO)</label>
-			<input id='FO' type='number' class='changer'>
+			<input id='FO' type='number' class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<label for='AG'>AGILITÉ (AG)</label>
-			<input id='AG' type='number' class='changer'>
+			<input id='AG' type='number' class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<label for='RA'>RAPIDITÉ (RA)</label>
-			<input id='RA' type='number' class='changer'>
+			<input id='RA' type='number' class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<label for='EN'>ENDURANCE (EN)</label>
-			<input id='EN' type='number' class='changer'>
+			<input id='EN' type='number' class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<label for='PR'>PRÉCISION (PR)</label>
-			<input id='PR' type='number' class='changer'>
+			<input id='PR' type='number' class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<label for='PE'>PERCEPTION (PE)</label>
-			<input id='PE' type='number' class='changer'>
+			<input id='PE' type='number' class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<label for='IN'>INTELLIGENCE (IN)</label>
-			<input id='IN' type='number' class='changer'>
+			<input id='IN' type='number' class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<label for='BE'>BEAUTÉ (BE)</label>
-			<input id='BE' type='number' class='changer'>
+			<input id='BE' type='number' class='changer' onchange="onAttribute(this)">
 		</div>
 	</section>
 </div> <!-- end left column-->
