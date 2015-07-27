@@ -6,6 +6,16 @@
 	<link rel='stylesheet' href='bitume.css'/>
 	<script>
 
+var GENDER = {
+	"female": { 
+		"FO": -1, 
+		"AG": +1, 
+	},
+	"male": { 
+		"FO": +1, 
+		"AG": -1, 
+	},
+};
 var MODIFS = {
 	FO:0, AG:0, RA:0, EN:0,
 	PR:0, PE:0, IN:0, BE:0,
@@ -16,28 +26,33 @@ var POINTS = {
 	PR:5, PE:5, IN:5, BE:5,
 }
 
-var PC = {
-	gender: "female",
-	FO: 5,
-	AG: 5,
-};
+var PC = { };
 
 function dumpPC() {
 	console.log(
-		 'FO:'+PC.FO+' AG:'+PC.AG+' RA:'+PC.RA+' EN:'+PC.EN
+		 'gender: '+PC.gender+'\n'
+		+'FO:'+PC.FO+' AG:'+PC.AG+' RA:'+PC.RA+' EN:'+PC.EN+' '
 		+'PR:'+PC.PR+' PE:'+PC.PE+' IN:'+PC.IN+' BE:'+PC.BE
 	);
 }
-function updatePC() {
-	PC.FO = POINTS.FO + MODIFS.FO;
-	PC.AG = POINTS.AG + MODIFS.AG;
-	PC.RA = POINTS.RA + MODIFS.RA;
-	PC.EN = POINTS.EN + MODIFS.EN;
-	PC.PR = POINTS.PR + MODIFS.PR;
-	PC.PE = POINTS.PE + MODIFS.PE;
-	PC.IN = POINTS.IN + MODIFS.IN;
-	PC.BE = POINTS.BE + MODIFS.BE;
-	dumpPC();
+function updatePCAttribute(id) {
+	PC[id] = POINTS[id] + MODIFS[id];
+}
+
+function onModifierChanged(modifiers, id, old_key, new_key) {
+	console.log('onModifierChanged '+old_key+'>'+new_key);
+	var value = MODIFS[id];
+	if(modifiers[old_key]) {
+		console.log('old '+id+' value: '+value);
+		console.log('old '+id+' modifier: '+modifiers[old_key][id]);
+		value -= modifiers[old_key][id];
+	}
+	console.log('new '+id+' modifier: '+modifiers[new_key][id]);
+	value += modifiers[new_key][id];
+	console.log('new '+id+' value: '+value);
+	MODIFS[id] = value;
+	updatePCAttribute(id);
+	document.getElementById(id).value = PC[id];
 }
 
 function onGender(selector) {
@@ -45,20 +60,19 @@ function onGender(selector) {
 	var hasChanged = new_gender != PC.gender;
 	console.log("old: "+PC.gender+" new: "+new_gender+" ? "+hasChanged);
 	if(new_gender == PC.gender) return; //nothing to do
+	onModifierChanged(GENDER, 'FO', PC.gender, new_gender);
+	onModifierChanged(GENDER, 'AG', PC.gender, new_gender);
 	PC.gender = new_gender;
-	var e = document.getElementById('FO');
-	if(PC.gender == "female") {
-		MODIFS.FO = -1;
-		MODIFS.AG = +1;
-	} else {
-		MODIFS.FO = +1;
-		MODIFS.AG = -1;
-	}
-	updatePC();
+}
+
+function loadPC() {
+	var gender = document.getElementById('gender').value;
+	onGender(document.getElementById('gender'));
+	dumpPC();
 }
 	</script>
 </head>
-<body>
+<body onload="loadPC()">
 
 <div class='main'>
 
