@@ -68,10 +68,25 @@ h2 {
 	margin-bottom: 2px;
 }
 
-.attribute > label {
+.attribute label {
 	font-size: 18px;
 	font-weight: bold;
 }
+.attribute span {
+	font-size: 14px;
+}
+.attribute .value {
+	align-self: center;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.nameandformula {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
 
 .changer {
 	border: none;
