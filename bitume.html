@@ -151,9 +151,6 @@ function updatePCAttribute(id) {
 		case 'CH':
 			PC[id] = (PC['FO'] + PC['EN']) *1.5;
 			break;
-		case 'SED':
-			//TODO
-			break;
 		default:
 			PC[id] = getBaseSkill(id);
 			break;
@@ -206,6 +203,13 @@ function updateModifier(op, modifiers, id, key) {
 	updateMinMaxAndValue(id);
 }
 
+function letsTalkAboutSED() {
+	var SED_attribute = 'FO';
+	if (PC.gender == 'female') SED_attribute = 'AG';
+	ATTRIBUTES['skills']['SED'][1] = SED_attribute;
+	document.getElementById('SEDformula').innerHTML = "SED = (BE + "+SED_attribute+") × 5";
+}
+
 function onGender(selector) {
 	var new_gender = selector.value;
 	if(!new_gender) throw "Unkown gender \""+new_gender+"\"";
@@ -217,6 +221,7 @@ function onGender(selector) {
 		updateModifier('+', GENDER, id, new_gender);
 	}
 	PC.gender = new_gender;
+	letsTalkAboutSED();
 	updatePC();
 }
 
@@ -456,7 +461,7 @@ function loadPC() {
 		<div class='attribute'>
 			<div class='nameandformula'>
 				<label for='SED'>SÉDUCTION (SED)</label>
-				<span>SED = (BE + FO/AG) × 5</span>
+				<span id='SEDformula'>SED = (BE + FO/AG) × 5</span>
 			</div>
 			<input id='SED' type='number' class='changer' onchange="onAttribute(this)">
 		</div>
