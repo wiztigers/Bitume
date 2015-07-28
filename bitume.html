@@ -53,10 +53,17 @@ var POINTS = {
 var PC = { };
 
 function dumpPC() {
-	console.log(
-		 'gender: '+PC.gender+'\n'
+	console.log("----------------------------------------"
+		+"\n--- FINAL PC ("+PC.gender+"):\n"
 		+'FO:'+PC.FO+' AG:'+PC.AG+' RA:'+PC.RA+' EN:'+PC.EN+' '
 		+'PR:'+PC.PR+' PE:'+PC.PE+' IN:'+PC.IN+' BE:'+PC.BE
+		+"\n--- POINTS:\n"
+		+'FO:'+POINTS.FO+' AG:'+POINTS.AG+' RA:'+POINTS.RA+' EN:'+POINTS.EN+' '
+		+'PR:'+POINTS.PR+' PE:'+POINTS.PE+' IN:'+POINTS.IN+' BE:'+POINTS.BE
+		+"\n--- MODIFS:\n"
+		+'FO:'+MODIFS.FO+' AG:'+MODIFS.AG+' RA:'+MODIFS.RA+' EN:'+MODIFS.EN+' '
+		+'PR:'+MODIFS.PR+' PE:'+MODIFS.PE+' IN:'+MODIFS.IN+' BE:'+MODIFS.BE
+		+"\n----------------------------------------"
 	);
 }
 
@@ -207,9 +214,11 @@ function updatePC() {
 }
 
 function onAttribute(selector) {
-	POINTS[selector.id] = selector.valueAsNumber;
-	console.log("onAttribute("+selector.id+"): "+POINTS[selector.id]+", available="+getAvailablePrimaryPoints());
-	updatePCAttribute(selector.id);
+	var id = selector.id;
+	POINTS[id] += (selector.valueAsNumber - PC[id]);
+	dumpPC();
+	updatePCAttribute(id);
+	dumpPC();
 	updatePC();
 }
 
