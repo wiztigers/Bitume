@@ -64,7 +64,10 @@ function getAttributeType(id) {
 	if (id == 'FO' || id == 'AG' || id == 'RA' || id == 'EN'
 	 || id == 'PR' || id == 'PE' || id == 'IN' || id == 'BE')
 		return 'primary';
-	if (id == 'ACR' || id == 'COM' || id == 'CON')
+	if (id == 'ACR' || id == 'COM' || id == 'CON'
+	 || id == 'DIS' || id == 'LAN' || id == 'MAR'
+	 || id == 'MEC' || id == 'PRE' || id == 'REP'
+	 || id == 'RES' || id == 'SED' || id == 'TIR')
 		return 'skill';
 	throw "Unknown attribute \""+id+"\"";
 }
@@ -77,6 +80,12 @@ function getCurrentPrimaryPoints() {
 function getAvailablePrimaryPoints() {
 	var MAXIMUM_PRIMARY_POINTS = 40;
 	return MAXIMUM_PRIMARY_POINTS - getCurrentPrimaryPoints();
+}
+
+function getBaseSkill(id) {
+	var l = ATTRIBUTES['skills'][id];
+	var res = (PC[l[0]] + PC[l[1]])*5;
+	return res;
 }
 
 function updatePCAttribute(id) {
@@ -103,7 +112,11 @@ function updatePCAttribute(id) {
 		case 'CH':
 			PC[id] = (PC['FO'] + PC['EN']) *1.5;
 			break;
+		case 'SED':
+			//TODO
+			break;
 		default:
+			PC[id] = getBaseSkill(id);
 			break;
 	}
 }
@@ -185,8 +198,11 @@ function updatePC() {
 		updatePCAttribute(id);
 		updateSecondaryValue(id);
 	}
-	for (var i = 0; i < ATTRIBUTES['skills'].length; i++) {
-		var id = ATTRIBUTES['skills'][i];
+	var skills = Object.keys(ATTRIBUTES['skills']);
+	for (var i = 0; i < skills.length; i++) {
+		var id = skills[i];
+		updatePCAttribute(id);
+		updateMinMaxAndValue(id);
 	}
 }
 
