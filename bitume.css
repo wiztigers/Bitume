@@ -6,18 +6,19 @@
 .column-left {
 	position: absolute;
 	left:0;
-	width: 400px;
+	width: 410px;
 	margin-top: 20px;
 }
 
 .column-central {
 	position: absolute;
-	left:444px;
+	left:460px;
 }
 
 .column-right {
 	position: absolute;
 	right:0;
+	width: 410px;
 	margin-top: 20px;
 }
 
