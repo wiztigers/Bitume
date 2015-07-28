@@ -137,7 +137,7 @@ function updatePCAttribute(id) {
 		case 'PE':
 		case 'IN':
 		case 'BE':
-			PC[id] = POINTS[id] + MODIFS[id];
+			PC[id] = MODIFS[id] + POINTS[id];
 			break;
 		case 'SI':
 			PC[id] = PC['EN'];
@@ -152,7 +152,7 @@ function updatePCAttribute(id) {
 			PC[id] = (PC['FO'] + PC['EN']) *1.5;
 			break;
 		default:
-			PC[id] = getBaseSkill(id);
+			PC[id] = getBaseSkill(id) + MODIFS[id] + POINTS[id];
 			break;
 	}
 }
