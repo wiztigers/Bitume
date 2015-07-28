@@ -40,29 +40,61 @@ var GENDER = {
 		'AG': -1, 
 	},
 };
+
+var TRIBE = {
+	'amazone': {
+		'RA': +1, 'BE': +1,
+		'DIS': +10, 'MAR': -20, 'TIR': +20,
+	},
+	'mercenaire': {
+		'RA': +1, 'PR': +1, 'PE': +1,
+		'COM': +10, 'CON': +10, 'LAN': +5, 'TIR': +10,
+	},
+};
+
 var MODIFS = {
 	FO:0, AG:0, RA:0, EN:0,
 	PR:0, PE:0, IN:0, BE:0,
+	ACR:0, COM:0, CON:0,
+	DIS:0, LAN:0, MAR:0,
+	MEC:0, PRE:0, REP:0,
+	RES:0, SED:0, TIR:0,
 }
 
 var POINTS = {
 	FO:5, AG:5, RA:5, EN:5,
 	PR:5, PE:5, IN:5, BE:5,
+	ACR:0, COM:0, CON:0,
+	DIS:0, LAN:0, MAR:0,
+	MEC:0, PRE:0, REP:0,
+	RES:0, SED:0, TIR:0,
 }
 
 var PC = { };
 
 function dumpPC() {
 	console.log("----------------------------------------"
-		+"\n--- FINAL PC ("+PC.gender+"):\n"
+		+"\n--- FINAL PC ("+PC.gender+" "+PC.tribe+"):\n"
 		+'FO:'+PC.FO+' AG:'+PC.AG+' RA:'+PC.RA+' EN:'+PC.EN+' '
-		+'PR:'+PC.PR+' PE:'+PC.PE+' IN:'+PC.IN+' BE:'+PC.BE
+		+'PR:'+PC.PR+' PE:'+PC.PE+' IN:'+PC.IN+' BE:'+PC.BE+'\n'
+		+'ACR:'+PC.ACR+' COM:'+PC.COM+' CON:'+PC.CON+' '
+		+'DIS:'+PC.DIS+' LAN:'+PC.LAN+' MAR:'+PC.MAR+' '
+		+'MEC:'+PC.MEC+' PRE:'+PC.PRE+' REP:'+PC.REP+' '
+		+'RES:'+PC.RES+' SED:'+PC.SED+' TIR:'+PC.TIR+' '
 		+"\n--- POINTS:\n"
 		+'FO:'+POINTS.FO+' AG:'+POINTS.AG+' RA:'+POINTS.RA+' EN:'+POINTS.EN+' '
-		+'PR:'+POINTS.PR+' PE:'+POINTS.PE+' IN:'+POINTS.IN+' BE:'+POINTS.BE
+		+'PR:'+POINTS.PR+' PE:'+POINTS.PE+' IN:'+POINTS.IN+' BE:'+POINTS.BE+'\n'
+		+'ACR:'+POINTS.ACR+' COM:'+POINTS.COM+' CON:'+POINTS.CON+' '
+		+'DIS:'+POINTS.DIS+' LAN:'+POINTS.LAN+' MAR:'+POINTS.MAR+' '
+		+'MEC:'+POINTS.MEC+' PRE:'+POINTS.PRE+' REP:'+POINTS.REP+' '
+		+'RES:'+POINTS.RES+' SED:'+POINTS.SED+' TIR:'+POINTS.TIR+' '
 		+"\n--- MODIFS:\n"
 		+'FO:'+MODIFS.FO+' AG:'+MODIFS.AG+' RA:'+MODIFS.RA+' EN:'+MODIFS.EN+' '
-		+'PR:'+MODIFS.PR+' PE:'+MODIFS.PE+' IN:'+MODIFS.IN+' BE:'+MODIFS.BE
+		+'PR:'+MODIFS.PR+' PE:'+MODIFS.PE+' IN:'+MODIFS.IN+' BE:'+MODIFS.BE+'\n'
+		+'ACR:'+MODIFS.ACR+' COM:'+MODIFS.COM+' CON:'+MODIFS.CON+' '
+		+'DIS:'+MODIFS.DIS+' LAN:'+MODIFS.LAN+' MAR:'+MODIFS.MAR+' '
+		+'MEC:'+MODIFS.MEC+' PRE:'+MODIFS.PRE+' REP:'+MODIFS.REP+' '
+		+'RES:'+MODIFS.RES+' SED:'+MODIFS.SED+' TIR:'+MODIFS.TIR+' '
 		+"\n----------------------------------------"
 	);
 }
@@ -174,18 +206,35 @@ function updateModifier(op, modifiers, id, key) {
 	updateMinMaxAndValue(id);
 }
 
-function onModifierChanged(modifiers, id, old_key, new_key) {
-	updateModifier('-', modifiers, id, old_key);
-	updateModifier('+', modifiers, id, new_key);
-}
-
 function onGender(selector) {
 	var new_gender = selector.value;
-	var hasChanged = new_gender != PC.gender;
+	if(!new_gender) throw "Unkown gender \""+new_gender+"\"";
 	if(new_gender == PC.gender) return; //DO nothing
-	onModifierChanged(GENDER, 'FO', PC.gender, new_gender);
-	onModifierChanged(GENDER, 'AG', PC.gender, new_gender);
+	var attributes = ['FO', 'AG'];
+	for (var i = 0; i < attributes.length; i++) {
+		var id = attributes[i];
+		updateModifier('-', GENDER, id, PC.gender);
+		updateModifier('+', GENDER, id, new_gender);
+	}
 	PC.gender = new_gender;
+	updatePC();
+}
+
+function updateTribe(op, tribe) {
+	var attributes = Object.keys(TRIBE[tribe]);
+	for (var i = 0; i < attributes.length; i++) {
+		updateModifier(op, TRIBE, attributes[i], tribe);
+	}
+}
+
+function onTribe(selector) {
+	var new_tribe = selector.value;
+	if(!new_tribe) throw "Unkown tribe \""+new_tribe+"\"";
+	if(new_tribe == PC.tribe) return; //DO nothing
+	if(PC.tribe) updateTribe('-', PC.tribe);
+	updateTribe('+', new_tribe);
+	PC.tribe = new_tribe;
+	updatePC();
 }
 
 function updateSecondaryValue(id) {
@@ -211,6 +260,7 @@ function updatePC() {
 		updatePCAttribute(id);
 		updateMinMaxAndValue(id);
 	}
+	dumpPC();
 }
 
 function onAttribute(selector) {
@@ -218,13 +268,12 @@ function onAttribute(selector) {
 	POINTS[id] += (selector.valueAsNumber - PC[id]);
 	dumpPC();
 	updatePCAttribute(id);
-	dumpPC();
 	updatePC();
 }
 
 function loadPC() {
-	var gender = document.getElementById('gender').value;
 	onGender(document.getElementById('gender'));
+	onTribe(document.getElementById('tribe'));
 	updatePC();
 }
 	</script>
@@ -250,7 +299,10 @@ function loadPC() {
 		</div>
 		<div class='attribute'>
 			<label for='tribe'>TRIBU</label>
-			<input type='text' id='tribe'>
+			<select id='tribe' class='combobox' onchange="onTribe(this)">
+				<option value='amazone'>Amazone</option>
+				<option value='mercenaire'>Mercenaire</option>
+			</select>
 		</div>
 		<div class='attribute'>
 			<label for='goal'>BUT</label>
