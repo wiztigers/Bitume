@@ -11,6 +11,9 @@ var ATTRIBUTES = {
 		'FO', 'AG', 'RA', 'EN',
 		'PR', 'PE', 'IN', 'BE',
 	],
+	'secondary' : [
+		'SI', 'PV', 'PP', 'CH',
+	],
 	'skills' : {
 		'ACR': ['AG', 'PR'],
 		'COM': ['AG', 'FO'],
@@ -77,7 +80,32 @@ function getAvailablePrimaryPoints() {
 }
 
 function updatePCAttribute(id) {
-	PC[id] = POINTS[id] + MODIFS[id];
+	switch (id) {
+		case 'FO':
+		case 'AG':
+		case 'RA':
+		case 'EN':
+		case 'PR':
+		case 'PE':
+		case 'IN':
+		case 'BE':
+			PC[id] = POINTS[id] + MODIFS[id];
+			break;
+		case 'SI':
+			PC[id] = PC['EN'];
+			break;
+		case 'PV':
+			PC[id] = 4 * PC['EN'];
+			break;
+		case 'PP':
+			PC[id] = PC['IN'] + PC['BE'];
+			break;
+		case 'CH':
+			PC[id] = (PC['FO'] + PC['EN']) *1.5;
+			break;
+		default:
+			break;
+	}
 }
 
 function getDefaultMaximum(id) {
@@ -140,11 +168,22 @@ function onGender(selector) {
 	PC.gender = new_gender;
 }
 
+function updateSecondaryValue(id) {
+	var e = document.getElementById(id);
+	e.innerHTML = PC[id];
+}
+
+
 function updatePC() {
 	for (var i = 0; i < ATTRIBUTES['primary'].length; i++) {
 		var id = ATTRIBUTES['primary'][i];
 		updatePCAttribute(id);
 		updateMinMaxAndValue(id);
+	}
+	for (var i = 0; i < ATTRIBUTES['secondary'].length; i++) {
+		var id = ATTRIBUTES['secondary'][i];
+		updatePCAttribute(id);
+		updateSecondaryValue(id);
 	}
 	for (var i = 0; i < ATTRIBUTES['skills'].length; i++) {
 		var id = ATTRIBUTES['skills'][i];
