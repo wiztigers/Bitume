@@ -55,50 +55,44 @@ var TRIBE = {
 var MODIFS = {
 	FO:0, AG:0, RA:0, EN:0,
 	PR:0, PE:0, IN:0, BE:0,
-	ACR:0, COM:0, CON:0,
-	DIS:0, LAN:0, MAR:0,
-	MEC:0, PRE:0, REP:0,
-	RES:0, SED:0, TIR:0,
+	ACR:0, COM:0, CON:0, DIS:0,
+	LAN:0, MAR:0, MEC:0, PRE:0,
+	REP:0, RES:0, SED:0, TIR:0,
 }
 
 var POINTS = {
 	FO:5, AG:5, RA:5, EN:5,
 	PR:5, PE:5, IN:5, BE:5,
-	ACR:0, COM:0, CON:0,
-	DIS:0, LAN:0, MAR:0,
-	MEC:0, PRE:0, REP:0,
-	RES:0, SED:0, TIR:0,
+	ACR:0, COM:0, CON:0, DIS:0,
+	LAN:0, MAR:0, MEC:0, PRE:0,
+	REP:0, RES:0, SED:0, TIR:0,
 }
 
 var PC = { };
 
 var MAXIMUM_PRIMARY_POINTS = 40;
 var MAXIMUM_PPE = 50;
-var gCurrentPPE = MAXIMUM_PPE;
 
 function dumpPC() {
 	console.log("----------------------------------------"
 		+"\n--- FINAL PC ("+PC.gender+" "+PC.tribe+"):\n"
 		+'FO:'+PC.FO+' AG:'+PC.AG+' RA:'+PC.RA+' EN:'+PC.EN+' '
 		+'PR:'+PC.PR+' PE:'+PC.PE+' IN:'+PC.IN+' BE:'+PC.BE+'\n'
-		+'ACR:'+PC.ACR+' COM:'+PC.COM+' CON:'+PC.CON+' '
-		+'DIS:'+PC.DIS+' LAN:'+PC.LAN+' MAR:'+PC.MAR+' '
-		+'MEC:'+PC.MEC+' PRE:'+PC.PRE+' REP:'+PC.REP+' '
-		+'RES:'+PC.RES+' SED:'+PC.SED+' TIR:'+PC.TIR+' '
+		+'ACR:'+PC.ACR+' COM:'+PC.COM+' CON:'+PC.CON+' DIS:'+PC.DIS+' '
+		+'LAN:'+PC.LAN+' MAR:'+PC.MAR+' MEC:'+PC.MEC+' PRE:'+PC.PRE+' '
+		+'REP:'+PC.REP+' RES:'+PC.RES+' SED:'+PC.SED+' TIR:'+PC.TIR+' '
 		+"\n--- POINTS:\n"
 		+'FO:'+POINTS.FO+' AG:'+POINTS.AG+' RA:'+POINTS.RA+' EN:'+POINTS.EN+' '
 		+'PR:'+POINTS.PR+' PE:'+POINTS.PE+' IN:'+POINTS.IN+' BE:'+POINTS.BE+'\n'
-		+'ACR:'+POINTS.ACR+' COM:'+POINTS.COM+' CON:'+POINTS.CON+' '
-		+'DIS:'+POINTS.DIS+' LAN:'+POINTS.LAN+' MAR:'+POINTS.MAR+' '
-		+'MEC:'+POINTS.MEC+' PRE:'+POINTS.PRE+' REP:'+POINTS.REP+' '
-		+'RES:'+POINTS.RES+' SED:'+POINTS.SED+' TIR:'+POINTS.TIR+' '
+		+'ACR:'+POINTS.ACR+' COM:'+POINTS.COM+' CON:'+POINTS.CON+' DIS:'+POINTS.DIS+' '
+		+'LAN:'+POINTS.LAN+' MAR:'+POINTS.MAR+' MEC:'+POINTS.MEC+' PRE:'+POINTS.PRE+' '
+		+'REP:'+POINTS.REP+' RES:'+POINTS.RES+' SED:'+POINTS.SED+' TIR:'+POINTS.TIR+' '
 		+"\n--- MODIFS:\n"
 		+'FO:'+MODIFS.FO+' AG:'+MODIFS.AG+' RA:'+MODIFS.RA+' EN:'+MODIFS.EN+' '
 		+'PR:'+MODIFS.PR+' PE:'+MODIFS.PE+' IN:'+MODIFS.IN+' BE:'+MODIFS.BE+'\n'
-		+'ACR:'+MODIFS.ACR+' COM:'+MODIFS.COM+' CON:'+MODIFS.CON+' '
-		+'DIS:'+MODIFS.DIS+' LAN:'+MODIFS.LAN+' MAR:'+MODIFS.MAR+' '
-		+'MEC:'+MODIFS.MEC+' PRE:'+MODIFS.PRE+' REP:'+MODIFS.REP+' '
-		+'RES:'+MODIFS.RES+' SED:'+MODIFS.SED+' TIR:'+MODIFS.TIR+' '
+		+'ACR:'+MODIFS.ACR+' COM:'+MODIFS.COM+' CON:'+MODIFS.CON+' DIS:'+MODIFS.DIS+' '
+		+'LAN:'+MODIFS.LAN+' MAR:'+MODIFS.MAR+' MEC:'+MODIFS.MEC+' PRE:'+MODIFS.PRE+' '
+		+'REP:'+MODIFS.REP+' RES:'+MODIFS.RES+' SED:'+MODIFS.SED+' TIR:'+MODIFS.TIR+' '
 		+"\n----------------------------------------"
 	);
 }
@@ -107,24 +101,28 @@ function getAttributeType(id) {
 	if (id == 'FO' || id == 'AG' || id == 'RA' || id == 'EN'
 	 || id == 'PR' || id == 'PE' || id == 'IN' || id == 'BE')
 		return 'primary';
-	if (id == 'ACR' || id == 'COM' || id == 'CON'
-	 || id == 'DIS' || id == 'LAN' || id == 'MAR'
-	 || id == 'MEC' || id == 'PRE' || id == 'REP'
-	 || id == 'RES' || id == 'SED' || id == 'TIR')
+	if (id == 'ACR' || id == 'COM' || id == 'CON' || id == 'DIS'
+	 || id == 'LAN' || id == 'MAR' || id == 'MEC' || id == 'PRE'
+	 || id == 'REP' || id == 'RES' || id == 'SED' || id == 'TIR')
 		return 'skill';
 	throw "Unknown attribute \""+id+"\"";
 }
 
-function getCurrentPrimaryPoints() {
-	return POINTS.FO + POINTS.AG + POINTS.RA + POINTS.EN
-		 + POINTS.PR + POINTS.PE + POINTS.IN + POINTS.BE;
+function getCurrentPoints(type) {
+	if (type == 'primary')
+		return POINTS.FO + POINTS.AG + POINTS.RA + POINTS.EN
+			 + POINTS.PR + POINTS.PE + POINTS.IN + POINTS.BE;
+	if (type == 'skill')
+		return POINTS.ACR + POINTS.COM + POINTS.CON + POINTS.DIS
+			 + POINTS.LAN + POINTS.MAR + POINTS.MEC + POINTS.PRE
+			 + POINTS.REP + POINTS.RES + POINTS.SED + POINTS.TIR;
 }
 
 function getAvailablePoints(type) {
-	if (type == 'primary' )
-		return MAXIMUM_PRIMARY_POINTS - getCurrentPrimaryPoints();
+	if (type == 'primary')
+		return MAXIMUM_PRIMARY_POINTS - getCurrentPoints(type);
 	if (type == 'skill')
-		return gCurrentPPE;
+		return MAXIMUM_PPE - getCurrentPoints(type);
 }
 
 function getBaseSkill(id) {
