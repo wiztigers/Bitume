@@ -14,7 +14,7 @@ var ATTRIBUTES = {
 	'secondary' : [
 		'SI', 'PV', 'PP', 'CH',
 	],
-	'skills' : {
+	'skill' : {
 		'ACR': ['AG', 'PR'],
 		'COM': ['AG', 'FO'],
 		'CON': ['PR', 'RA'],
@@ -72,6 +72,10 @@ var POINTS = {
 
 var PC = { };
 
+var MAXIMUM_PRIMARY_POINTS = 40;
+var MAXIMUM_PPE = 50;
+var gCurrentPPE = MAXIMUM_PPE;
+
 function dumpPC() {
 	console.log("----------------------------------------"
 		+"\n--- FINAL PC ("+PC.gender+" "+PC.tribe+"):\n"
@@ -116,13 +120,15 @@ function getCurrentPrimaryPoints() {
 		 + POINTS.PR + POINTS.PE + POINTS.IN + POINTS.BE;
 }
 
-function getAvailablePrimaryPoints() {
-	var MAXIMUM_PRIMARY_POINTS = 40;
-	return MAXIMUM_PRIMARY_POINTS - getCurrentPrimaryPoints();
+function getAvailablePoints(type) {
+	if (type == 'primary' )
+		return MAXIMUM_PRIMARY_POINTS - getCurrentPrimaryPoints();
+	if (type == 'skill')
+		return gCurrentPPE;
 }
 
 function getBaseSkill(id) {
-	var l = ATTRIBUTES['skills'][id];
+	var l = ATTRIBUTES['skill'][id];
 	var res = (PC[l[0]] + PC[l[1]])*5;
 	return res;
 }
@@ -157,8 +163,7 @@ function updatePCAttribute(id) {
 	}
 }
 
-function getDefaultMaximum(id) {
-	var type = getAttributeType(id);
+function getDefaultMaximum(type) {
 	if (type == 'primary') return 10;
 	if (type == 'skill') return 100;
 }
@@ -167,28 +172,30 @@ function getMaximum(id) {
 	var malus = 0
 	if(MODIFS[id] < 0) malus = -MODIFS[id];
 	var type = getAttributeType(id);
-	return getDefaultMaximum(id) - malus;
+	return getDefaultMaximum(type) - malus;
 }
 
 function getDefaultMinimum(id) {
 	var type = getAttributeType(id);
 	if (type == 'primary') return 1;
-	if (type == 'skill') return 0; //TODO: if skill, it's (A1+A2)/2
+	if (type == 'skill') return getBaseSkill(id);
 }
 
-function getMinimum(id) {
-	var bonus = 0
-	if(MODIFS[id] > 0) bonus = MODIFS[id];
-	var type = getAttributeType(id);
-	return getDefaultMinimum(id) + bonus;
+function getMinimum(id, type) {
+	var default_minimum = getDefaultMinimum(id);
+	if (type == 'skill') return default_minimum + MODIFS[id];
+	var bonus = 0;
+	if (MODIFS[id] > 0) bonus = MODIFS[id];
+	return default_minimum + bonus;
 }
 
 function updateMinMaxAndValue(id) {
 	var e = document.getElementById(id);
 	e.value = PC[id];
-	var max = e.valueAsNumber + getAvailablePrimaryPoints();
+	var type = getAttributeType(id);
+	var max = e.valueAsNumber + getAvailablePoints(type);
 	e.max = Math.min(getMaximum(id), max);
-	e.min = getMinimum(id);
+	e.min = getMinimum(id, type);
 }
 
 function updateModifier(op, modifiers, id, key) {
@@ -206,7 +213,7 @@ function updateModifier(op, modifiers, id, key) {
 function letsTalkAboutSED() {
 	var SED_attribute = 'FO';
 	if (PC.gender == 'female') SED_attribute = 'AG';
-	ATTRIBUTES['skills']['SED'][1] = SED_attribute;
+	ATTRIBUTES['skill']['SED'][1] = SED_attribute;
 	document.getElementById('SEDformula').innerHTML = "SED = (BE + "+SED_attribute+") × 5";
 }
 
@@ -259,7 +266,7 @@ function updatePC() {
 		updatePCAttribute(id);
 		updateSecondaryValue(id);
 	}
-	var skills = Object.keys(ATTRIBUTES['skills']);
+	var skills = Object.keys(ATTRIBUTES['skill']);
 	for (var i = 0; i < skills.length; i++) {
 		var id = skills[i];
 		updatePCAttribute(id);
@@ -271,7 +278,6 @@ function updatePC() {
 function onAttribute(selector) {
 	var id = selector.id;
 	POINTS[id] += (selector.valueAsNumber - PC[id]);
-	dumpPC();
 	updatePCAttribute(id);
 	updatePC();
 }
@@ -393,84 +399,84 @@ function loadPC() {
 				<label for='ACR'>ACROBATIE (ACR)</label>
 				<span>ACR = (AG + PR) × 5</span>
 			</div>
-			<input id='ACR' type='number' class='changer' onchange="onAttribute(this)">
+			<input id='ACR' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<div class='nameandformula'>
 				<label for='COM'>COMBAT (COM)</label>
 				<span>COM = (AG + FO) × 5</span>
 			</div>
-			<input id='COM' type='number' class='changer' onchange="onAttribute(this)">
+			<input id='COM' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<div class='nameandformula'>
 				<label for='CON'>CONDUITE (CON)</label>
 				<span>CON = (PR + RA) × 5</span>
 			</div>
-			<input id='CON' type='number' class='changer' onchange="onAttribute(this)">
+			<input id='CON' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<div class='nameandformula'>
 				<label for='DIS'>DISCRETION (DIS)</label>
 				<span>DIS = (AG + IN) × 5</span>
 			</div>
-			<input id='DIS' type='number' class='changer' onchange="onAttribute(this)">
+			<input id='DIS' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<div class='nameandformula'>
 				<label for='LAN'>LANCER (LAN)</label>
 				<span>LAN = (FO + PR) × 5</span>
 			</div>
-			<input id='LAN' type='number' class='changer' onchange="onAttribute(this)">
+			<input id='LAN' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<div class='nameandformula'>
 				<label for='MAR'>MARCHANDAGE (MAR)</label>
 				<span>MAR = (BE + PE) × 5</span>
 			</div>
-			<input id='MAR' type='number' class='changer' onchange="onAttribute(this)">
+			<input id='MAR' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<div class='nameandformula'>
 				<label for='MEC'>MÉCANIQUE (MEC)</label>
 				<span>MEC = (IN + RA) × 5</span>
 			</div>
-			<input id='MEC' type='number' class='changer' onchange="onAttribute(this)">
+			<input id='MEC' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<div class='nameandformula'>
 				<label for='PRE'>PREMIERS SOINS (PRE)</label>
 				<span>PRE = (PE + RA) × 5</span>
 			</div>
-			<input id='PRE' type='number' class='changer' onchange="onAttribute(this)">
+			<input id='PRE' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<div class='nameandformula'>
 				<label for='REP'>REPÉRAGE (REP)</label>
 				<span>REP = (IN + PE) × 5</span>
 			</div>
-			<input id='REP' type='number' class='changer' onchange="onAttribute(this)">
+			<input id='REP' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<div class='nameandformula'>
 				<label for='RES'>RÉSISTANCE (RES)</label>
 				<span>RES = (EN + FO) × 5</span>
 			</div>
-			<input id='RES' type='number' class='changer' onchange="onAttribute(this)">
+			<input id='RES' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<div class='nameandformula'>
 				<label for='SED'>SÉDUCTION (SED)</label>
 				<span id='SEDformula'>SED = (BE + FO/AG) × 5</span>
 			</div>
-			<input id='SED' type='number' class='changer' onchange="onAttribute(this)">
+			<input id='SED' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
 			<div class='nameandformula'>
 				<label for='TIR'>TIR (TIR)</label>
 				<span>TIR = (PE + PR) × 5</span>
 			</div>
-			<input id='TIR' type='number' class='changer' onchange="onAttribute(this)">
+			<input id='TIR' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 	</section>
 </div> <!-- end right column-->
