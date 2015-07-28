@@ -294,6 +294,7 @@ function loadPC() {
 <h1 class='framed' style='border-width: 5px;'>BITUME</h1>
 
 <div class='column-left framed'>
+
 	<section id='general'>
 		<div class='attribute'>
 			<label for='name'>NOM</label>
@@ -317,7 +318,10 @@ function loadPC() {
 			<label for='goal'>BUT</label>
 			<input type='text' id='goal'>
 		</div>
-		<!-- TODO: description -->
+		<div class='attribute column'>
+			<label for='description'>DESCRIPTION</label>
+			<textarea id='description' rows=4 cols=50></textarea>
+		</div>
 	</section>
 
 	<section id='attrs'>
@@ -355,128 +359,153 @@ function loadPC() {
 			<input id='BE' type='number' class='changer' onchange="onAttribute(this)">
 		</div>
 	</section>
+
+	<section>
+		<h2>TALENTS SPÉCIAUX</h2>
+		<div class='attribute'>
+			<textarea id='specials' rows=7 cols=50></textarea>
+		</div>
+	</section>
+
+	<section>
+		<h2>MATOS</h2>
+		<div class='attribute'>
+			<textarea id='gear' rows=9 cols=50></textarea>
+		</div>
+	</section>
+
 </div> <!-- end left column-->
 
 
 <div class='column-right framed'>
+
 	<section>
 		<h2>CARACTÉRISTIQUES <br/> SECONDAIRES</h2>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='SI'>SEUIL D'INCONSCIENCE (SI)</label>
 				<span>SI = EN</span>
 			</div>
 			<div id='SI' class='value'>6</div>
 		</div>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='PV'>POINTS DE VIE (PV)</label>
 				<span>PV = EN × 4</span>
 			</div>
 			<div id='PV' class='value'>24</div>
 		</div>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='PP'>POINTS DE PRESTIGE (PP)</label>
 				<span>PP = IN + BE</span>
 			</div>
 			<div id='PP' class='value'>7</div>
 		</div>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='CH'>CHARGE (CH)</label>
 				<span>CH = (FO + EN) × 1.5</span>
 			</div>
 			<div id='CH' class='value'>15</div>
 		</div>
 	</section>
+
 	<section>
 		<h2>TALENTS</h2>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='ACR'>ACROBATIE (ACR)</label>
 				<span>ACR = (AG + PR) × 5</span>
 			</div>
 			<input id='ACR' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='COM'>COMBAT (COM)</label>
 				<span>COM = (AG + FO) × 5</span>
 			</div>
 			<input id='COM' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='CON'>CONDUITE (CON)</label>
 				<span>CON = (PR + RA) × 5</span>
 			</div>
 			<input id='CON' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='DIS'>DISCRETION (DIS)</label>
 				<span>DIS = (AG + IN) × 5</span>
 			</div>
 			<input id='DIS' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='LAN'>LANCER (LAN)</label>
 				<span>LAN = (FO + PR) × 5</span>
 			</div>
 			<input id='LAN' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='MAR'>MARCHANDAGE (MAR)</label>
 				<span>MAR = (BE + PE) × 5</span>
 			</div>
 			<input id='MAR' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='MEC'>MÉCANIQUE (MEC)</label>
 				<span>MEC = (IN + RA) × 5</span>
 			</div>
 			<input id='MEC' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='PRE'>PREMIERS SOINS (PRE)</label>
 				<span>PRE = (PE + RA) × 5</span>
 			</div>
 			<input id='PRE' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='REP'>REPÉRAGE (REP)</label>
 				<span>REP = (IN + PE) × 5</span>
 			</div>
 			<input id='REP' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='RES'>RÉSISTANCE (RES)</label>
 				<span>RES = (EN + FO) × 5</span>
 			</div>
 			<input id='RES' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='SED'>SÉDUCTION (SED)</label>
 				<span id='SEDformula'>SED = (BE + FO/AG) × 5</span>
 			</div>
 			<input id='SED' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 		<div class='attribute'>
-			<div class='nameandformula'>
+			<div class='column'>
 				<label for='TIR'>TIR (TIR)</label>
 				<span>TIR = (PE + PR) × 5</span>
 			</div>
 			<input id='TIR' type='number' step=5 class='changer' onchange="onAttribute(this)">
 		</div>
 	</section>
+
+	<section>
+		<h2>DÉFAUTS</h2>
+		<div class='attribute'>
+			<textarea id='flaws' rows=2 cols=50></textarea>
+		</div>
+	</section>
+
 </div> <!-- end right column-->
 
 <div class='column-central'>
