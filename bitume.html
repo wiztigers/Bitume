@@ -28,8 +28,25 @@
 		<div class='attribute'>
 			<label for='tribe'>TRIBU</label>
 			<select id='tribe' class='combobox' onchange="onTribe(this)">
-				<option value='amazone'>Amazone</option>
-				<option value='mercenaire'>Mercenaire</option>
+				<option value='amazones'>Amazone</option>
+				<option value='confrerie du serpent'>Confrérie du serpent</option>
+				<option value='enfants'>Enfants</option>
+				<option value='conservateurs'>Conservateurs</option>
+				<option value='fils du metal'>Fils du métal</option>
+				<option value='fermiers'>Fermiers</option>
+				<option value='guerisseurs'>Guérisseurs</option>
+				<option value='garagistes'>Garagistes</option>
+				<option value='skinheads'>Skinheads</option>
+				<option value='punks'>Punks</option>
+				<option value='yankees'>Yankees</option>
+				<option value='vikings'>Vikings</option>
+				<option value='indiens'>Indiens</option>
+				<option value="hell's angels">Hell's Angels</option>
+				<option value='mercenaires'>Mercenaire</option>
+				<option value='marchands'>Marchands</option>
+				<option value='justiciers'>Justiciers</option>
+				<option value='cro-mags'>Cro-mags</option>
+				<option value='parias'>Parias</option>
 			</select>
 		</div>
 		<div class='attribute'>
@@ -306,14 +323,78 @@ var GENDER = {
 };
 
 var TRIBE = {
-	'amazone': {
+	'amazones': {
 		'RA': +1, 'BE': +1,
 		'DIS': +10, 'MAR': -20, 'TIR': +20,
 	},
-	'mercenaire': {
+	'confrerie du serpent': {
+		'PE': +1, 'PR': +1,
+		'CON': -50, 'DIS': +20, 'TIR': +10,
+	},
+	'enfants': {
+		'AG': +1, 'RA': +1,
+		'DIS': +20, 'REP': +10, 'ACR': +20, 'MAR': -20,
+	},
+	'conservateurs': {
+		'IN': +1, 'FO': -1, 'EN': -1,
+		'CON': -10, 'TIR': -20, 'COM': -30, 'RES': -40,
+	},
+	'fils du metal': {
+		'IN': -2, 'RA': +1,
+		'CON': +20, 'TIR': +20, 'MAR': -20, 'PRE': -30,
+	},
+	'fermiers': {
+		'BE': -1, 'EN': +1,
+		'MAR': +10, 'CON': -20,
+	},
+	'guerisseurs': {
+		'IN': +2, 'PE': +1, 'PR': +1,
+		'PRE': +30, 'DIS': +10,
+	},
+	'garagistes': {
+		'IN': +1, 'PR': +1,
+		'CON': +10, 'MEC': +30,
+	},
+	'skinheads': {
+		'FO': +1, 'PE': -1,
+		'MAR': -10, 'COM': +10, 'TIR': +10, 'DIS': -10,
+	},
+	'punks': {
+		'AG': +1, 'RA': +1, 'FO': -1,
+		'COM': +10, 'DIS': +20, 'MAR': -20, 'ACR': +10, 'TIR': +10,
+	},
+	'yankees': {
+		'PR': +1, 'PE': +1,
+		'DIS': +10, 'ACR': +10, 'TIR': +10, 'RES': -10, 'MAR': -20, 
+	},
+	'vikings': {
+		'FO': +1, 'EN': +1, 'RA': -1,
+		'COM': +20,
+	},
+	'indiens': {
+		'AG': +1, 'RA': +1, 'PE': +1,
+		'MAR': -20, 'REP': +10, 'DIS': +10, 'TIR': +10, 'REP': +20, 'CON': +5,
+	},
+	"hell's angels": {
+		'FO': +1, 'EN': +1,
+		'CON': +20, 'COM': +10,
+	},
+	'mercenaires': {
 		'RA': +1, 'PR': +1, 'PE': +1,
 		'COM': +10, 'CON': +10, 'LAN': +5, 'TIR': +10,
 	},
+	'marchands': {
+		'IN': +2, 'EN': -1, 'PE': +1,
+		'MAR': +30, 'REP': +10,
+	},
+	'justiciers': {
+		'CON': +10, 'TIR': +10, 'COM': +10,
+	},
+	'cro-mags': {
+		'FO': +2, 'EN': +3, 'IN': -3,
+		'CON': -70, 'COM': +30, 'DIS': +30, 'REP': +10, 'MEC': -50, 'MAR': -20,
+	},
+	'parias': { },
 };
 
 var MODIFS = {
@@ -495,6 +576,7 @@ function onGender(selector) {
 }
 
 function updateTribe(op, tribe) {
+	console.log('updateTribe('+tribe+')');
 	var attributes = Object.keys(TRIBE[tribe]);
 	for (var i = 0; i < attributes.length; i++) {
 		updateModifier(op, TRIBE, attributes[i], tribe);
