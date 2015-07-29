@@ -309,6 +309,17 @@ var ATTRIBUTES = {
 		'SED': ['BE', 'FO/AG'],
 		'TIR': ['PE', 'PR'],
 	},
+	'special' : {
+		'DET': ['', ''],
+		'DEP': ['', ''],
+		'DRE': ['', ''],
+		'MAN': ['', ''],
+		'MAA': ['', ''],
+		'MAV': ['', ''],
+		'NAG': ['', ''],
+		'POP': ['', ''],
+		'TIN': ['', ''],
+	},
 }
 
 var GENDER = {
@@ -395,6 +406,291 @@ var TRIBE = {
 		'CON': -70, 'COM': +30, 'DIS': +30, 'REP': +10, 'MEC': -50, 'MAR': -20,
 	},
 };
+
+var XX = {
+
+		  //////////////////////
+		 // TALENTS SPECIAUX //
+		//////////////////////
+
+	'agriculture et élevage': {
+		'PPE': 10, 
+		'modifs': [
+				{'attribute': 'PP', 'modif': +15 },
+			],
+		},
+	'amitie': {
+		'PPE': 50, 
+		},
+	'camouflage': {
+		'PPE': 25, 
+		},
+	'celebrite': {
+		'PPE': 10, 
+		'modifs': [
+				{'attribute': 'PP', 'modif': +30 },
+			],
+		},
+	'chance': {
+		'PPE': 40, 
+		},
+	'combat motorise': {
+		'PPE': 40, 
+		'modifs': [
+				{'attribute': 'CON', 'modif': +20, 'limit': "en combat motorisé" },
+				{'attribute': 'REP', 'modif': +20, 'limit': "en combat motorisé" },
+				{'attribute': 'TIR', 'modif': +20, 'limit': "en combat motorisé" },
+			],
+		},
+	'combat nocturne': {
+		'PPE': 40, 
+		'modifs': [
+				{'attribute': 'REP', 'modif': +20, 'limit': "la nuit" },
+				{'attribute': 'TIR', 'modif': +20, 'limit': "la nuit" },
+				{'attribute': 'ACR', 'modif': +20, 'limit': "la nuit" },
+				{'attribute': 'COM', 'modif': +20, 'limit': "la nuit" },
+				{'attribute': 'DIS', 'modif': +20, 'limit': "la nuit" },
+				{'attribute': 'LAN', 'modif': +20, 'limit': "la nuit" },
+			],
+		},
+	'combat rural': {
+		'PPE': 40, 
+		'modifs': [
+				{'attribute': 'REP', 'modif': +20, 'limit': "hors agglo" },
+				{'attribute': 'TIR', 'modif': +20, 'limit': "hors agglo" },
+				{'attribute': 'ACR', 'modif': +20, 'limit': "hors agglo" },
+				{'attribute': 'COM', 'modif': +20, 'limit': "hors agglo" },
+				{'attribute': 'DIS', 'modif': +20, 'limit': "hors agglo" },
+				{'attribute': 'LAN', 'modif': +20, 'limit': "hors agglo" },
+			],
+		},
+	'combat sans arme': {
+		'PPE': 20, 
+		'modifs': [
+				{'attribute': 'COM', 'modif': 'FOx4' /* TODO fonctor */, 'limit': "sans arme" },
+			],
+		},
+	'combat urbain': {
+		'PPE': 40, 
+		'modifs': [
+				{'attribute': 'REP', 'modif': +20, 'limit': "en ville" },
+				{'attribute': 'TIR', 'modif': +20, 'limit': "en ville" },
+				{'attribute': 'ACR', 'modif': +20, 'limit': "en ville" },
+				{'attribute': 'COM', 'modif': +20, 'limit': "en ville" },
+				{'attribute': 'DIS', 'modif': +20, 'limit': "en ville" },
+				{'attribute': 'LAN', 'modif': +20, 'limit': "en ville" },
+			],
+		},
+	'commandement': {
+		'PPE': 40, 
+		'modifs': [
+				{'attribute': 'PP', 'modif': +20 },
+			],
+		},
+	'conduite specialisee': {
+		'PPE': 10, 
+		'modifs': [
+				{'attribute': 'CON', 'modif': +20, 'limit': "1 véhicule" },
+			],
+		},
+	'conduite sportive': {
+		'PPE': 10, 
+		'modifs': [
+				{'attribute': 'CON', 'modif': +20, 'limit': "accélération/freinage" },
+			],
+		},
+	'commandement': {
+		'PPE': 20, 
+		'modifs': [
+				{'attribute': 'PP', 'modif': +15 },
+			],
+		},
+	'dessin': {
+		'PPE': 10, 
+		'modifs': [
+				{'attribute': 'PP', 'modif': +10 },
+			],
+		},
+	'demolition': {
+		'PPE': 35, 
+		'special': [
+				{'attribute': 'DET'},
+				{'attribute': 'DEP'},
+			],
+		},
+	"dressage d'animaux": {
+		'PPE': 30, 
+		'special': [
+				{'attribute': 'DRE'},
+			],
+		},
+	'escalade': {
+		'PPE': 15, 
+		'modifs': [
+				{'attribute': 'ACR', 'modif': +30, 'limit': "escalade" },
+			],
+		},
+	'esquive': {
+		'PPE': 20,
+		},
+	'flatterie': {
+		'PPE': 20, 
+		'modifs': [
+				{'attribute': 'MAR', 'modif': 'INx3' }, //TODO fonctor
+				{'attribute': 'SED', 'modif': 'INx5' }, //TODO fonctor
+			],
+		},
+	'forgeron': {
+		'PPE': 30, 
+		'modifs': [
+				{'attribute': 'PP', 'modif': +15 },
+				{'attribute': 'MAA', 'modif': +30, 'limit': "armes en métal" },
+				{'attribute': 'MEC', 'modif': +20 },
+			],
+		},
+	'heraldique': {
+		'PPE': 10,
+		},
+	'histoire': {
+		'PPE': 40, //TODO fonctor
+		},
+	'lire et ecrire': {
+		'PPE': 10, //TODO fonctor
+		},
+	"maitre d'arme": {  //TODO gear-linked
+		'PPE': 40, 
+		'modifs': [
+				{'attribute': 'PP', 'modif': +15 },
+				{'attribute': 'COM', 'modif': +30, 'limit': "une épée" },
+				{'attribute': 'COM', 'modif': -60, 'limit': "viser" },
+			],
+		},
+	'manipulation': {
+		'PPE': 30, 
+		'special': [
+				{'attribute': 'MAN'},
+			],
+		},
+	"manufacture d'armes": {
+		'PPE': 40, 
+		'modifs': [
+				{'attribute': 'PP', 'modif': +20 },
+			],
+		'special': [
+				{'attribute': 'MAA'},
+			],
+		},
+	'manufacture de vetements': {
+		'PPE': 30, 
+		'modifs': [
+				{'attribute': 'PP', 'modif': +10 },
+			],
+		'special': [
+				{'attribute': 'MAV'},
+			],
+		},
+	'maquillage': {  //TODO gear-linked
+		'PPE': 5, 
+		'modifs': [
+				{'attribute': 'SED', 'modif': '5/15' }, //TODO fonctor
+			],
+		},
+	'musicien': {
+		'PPE': 10, 
+		'modifs': [
+				{'attribute': 'PP', 'modif': +5 },
+			],
+		},
+	'nage': {
+		'PPE': 20, 
+		'special': [
+				{'attribute': 'NAG'},
+			],
+		},
+	'parade': {
+		'PPE': 20, 
+		},
+	'peche': {
+		'PPE': 20, 
+		},
+	'pistage': {
+		'PPE': 15, 
+		'modifs': [
+				{'attribute': 'REP', 'modif': 'INx3' /* TODO fonctor */, 'limit': "pistage" },
+			],
+		},
+	'pose de piege': {
+		'PPE': 20, 
+		'special': [
+				{'attribute': 'POP'},
+			],
+		},
+	"resistance a l'alcool": {
+		'PPE': 20, //TODO fonctor
+		'modifs': [
+				{'attribute': 'RES', 'modif': 'ENx4' /* TODO fonctor */, 'limit': "alcool" },
+			],
+		},
+	'resistant': {
+		'PPE': 15,
+		'modifs': [
+				{'attribute': 'SI', 'modif': +2 },
+				{'attribute': 'PV', 'modif': +4 },
+			],
+		},
+	'riche': {  //TODO gear-linked
+		'PPE': 25,
+		},
+	'specialisation en arme': {  //TODO gear-linked
+		'PPE': 10,
+		'modifs': [
+				{'attribute': '?' /* TODO fonctor */, 'modif': +20, 'limit': "une arme" },
+			],
+		},
+	'tir indirect': {
+		'PPE': 20, 
+		'special': [
+				{'attribute': 'TIN'},
+			],
+		},
+	'tir rapide': {  //TODO gear-linked
+		'PPE': 15,
+		'modifs': [
+				{'attribute': '?' /* TODO fonctor */, 'modif': +5, 'limit': "une arme" },
+				{'attribute': 'RA', 'modif': 'RA' /* TODO fonctor */, 'limit': "une arme" },
+			],
+		},
+	'tricherie': {
+		'PPE': 20,
+		'modifs': [
+				{'attribute': '?' /* TODO */, 'modif': 'INx8' /* TODO fonctor */, 'limit': "triche au jeu" },
+			],
+		},
+
+		  /////////////
+		 // DEFAUTS //
+		/////////////
+		
+	'alcoolique': {
+		'PPE': -20, 
+		'modif': [
+				{'attribute': 'PP', 'modif': -5 },
+			],
+		},
+	'avare': {
+		'PPE': -15, 
+		'modif': [
+				{'attribute': 'PP', 'modif': -15 },
+			],
+		},
+	'borgne': {
+		'PPE': -15, 
+		'modif': [
+				{'attribute': 'SED', 'modif': -30 },
+				{'attribute': 'REP', 'modif': -20 },
+			],
+		},
+}
 
 var MODIFS = {
 	FO:0, AG:0, RA:0, EN:0,
