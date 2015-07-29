@@ -394,7 +394,6 @@ var TRIBE = {
 		'FO': +2, 'EN': +3, 'IN': -3,
 		'CON': -70, 'COM': +30, 'DIS': +30, 'REP': +10, 'MEC': -50, 'MAR': -20,
 	},
-	'parias': { },
 };
 
 var MODIFS = {
@@ -576,7 +575,6 @@ function onGender(selector) {
 }
 
 function updateTribe(op, tribe) {
-	console.log('updateTribe('+tribe+')');
 	var attributes = Object.keys(TRIBE[tribe]);
 	for (var i = 0; i < attributes.length; i++) {
 		updateModifier(op, TRIBE, attributes[i], tribe);
