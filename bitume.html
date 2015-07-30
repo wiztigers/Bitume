@@ -310,15 +310,15 @@ var ATTRIBUTES = {
 		'TIR': ['PE', 'PR'],
 	},
 	'special' : {
-		'DET': ['', ''],
-		'DEP': ['', ''],
-		'DRE': ['', ''],
-		'MAN': ['', ''],
-		'MAA': ['', ''],
-		'MAV': ['', ''],
-		'NAG': ['', ''],
-		'POP': ['', ''],
-		'TIN': ['', ''],
+		'DET': ['IN', 'PR'],
+		'DEP': ['PR', 'PE'],
+		'DRE': ['IN', 'PE'],
+		'MAN': ['PR', 'RA'],
+		'MAA': ['IN', 'RA'],
+		'MAV': ['PR', 'IN'],
+		'NAG': ['AG', 'FO'],
+		'POP': ['PR', 'IN'],
+		'TIN': ['IN', 'PE'],
 	},
 }
 
@@ -445,23 +445,23 @@ var XX = {
 	'combat nocturne': {
 		'PPE': 40, 
 		'modifs': [
-				{'attribute': 'REP', 'modif': +20, 'limit': "la nuit" },
-				{'attribute': 'TIR', 'modif': +20, 'limit': "la nuit" },
-				{'attribute': 'ACR', 'modif': +20, 'limit': "la nuit" },
-				{'attribute': 'COM', 'modif': +20, 'limit': "la nuit" },
-				{'attribute': 'DIS', 'modif': +20, 'limit': "la nuit" },
-				{'attribute': 'LAN', 'modif': +20, 'limit': "la nuit" },
+				{'attribute': 'REP', 'modif': +10, 'limit': "nocturne" },
+				{'attribute': 'TIR', 'modif': +10, 'limit': "nocturne" },
+				{'attribute': 'ACR', 'modif': +10, 'limit': "nocturne" },
+				{'attribute': 'COM', 'modif': +10, 'limit': "nocturne" },
+				{'attribute': 'DIS', 'modif': +10, 'limit': "nocturne" },
+				{'attribute': 'LAN', 'modif': +10, 'limit': "nocturne" },
 			],
 		},
 	'combat rural': {
 		'PPE': 40, 
 		'modifs': [
-				{'attribute': 'REP', 'modif': +20, 'limit': "hors agglo" },
-				{'attribute': 'TIR', 'modif': +20, 'limit': "hors agglo" },
-				{'attribute': 'ACR', 'modif': +20, 'limit': "hors agglo" },
-				{'attribute': 'COM', 'modif': +20, 'limit': "hors agglo" },
-				{'attribute': 'DIS', 'modif': +20, 'limit': "hors agglo" },
-				{'attribute': 'LAN', 'modif': +20, 'limit': "hors agglo" },
+				{'attribute': 'REP', 'modif': +20, 'limit': "rural" },
+				{'attribute': 'TIR', 'modif': +20, 'limit': "rural" },
+				{'attribute': 'ACR', 'modif': +20, 'limit': "rural" },
+				{'attribute': 'COM', 'modif': +20, 'limit': "rural" },
+				{'attribute': 'DIS', 'modif': +20, 'limit': "rural" },
+				{'attribute': 'LAN', 'modif': +20, 'limit': "rural" },
 			],
 		},
 	'combat sans arme': {
@@ -471,18 +471,18 @@ var XX = {
 			],
 		},
 	'combat urbain': {
-		'PPE': 40, 
+		'PPE': 30, 
 		'modifs': [
-				{'attribute': 'REP', 'modif': +20, 'limit': "en ville" },
-				{'attribute': 'TIR', 'modif': +20, 'limit': "en ville" },
-				{'attribute': 'ACR', 'modif': +20, 'limit': "en ville" },
-				{'attribute': 'COM', 'modif': +20, 'limit': "en ville" },
-				{'attribute': 'DIS', 'modif': +20, 'limit': "en ville" },
-				{'attribute': 'LAN', 'modif': +20, 'limit': "en ville" },
+				{'attribute': 'REP', 'modif': +10, 'limit': "urbain" },
+				{'attribute': 'TIR', 'modif': +10, 'limit': "urbain" },
+				{'attribute': 'ACR', 'modif': +10, 'limit': "urbain" },
+				{'attribute': 'COM', 'modif': +10, 'limit': "urbain" },
+				{'attribute': 'DIS', 'modif': +10, 'limit': "urbain" },
+				{'attribute': 'LAN', 'modif': +10, 'limit': "urbain" },
 			],
 		},
 	'commandement': {
-		'PPE': 40, 
+		'PPE': 25, // INx5 PJ 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +20 },
 			],
@@ -499,7 +499,7 @@ var XX = {
 				{'attribute': 'CON', 'modif': +20, 'limit': "accélération/freinage" },
 			],
 		},
-	'commandement': {
+	'construction': {
 		'PPE': 20, 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +15 },
@@ -510,6 +510,9 @@ var XX = {
 		'modifs': [
 				{'attribute': 'PP', 'modif': +10 },
 			],
+		},
+	'deguisement': {
+		'PPE': 35, 
 		},
 	'demolition': {
 		'PPE': 35, 
@@ -550,19 +553,25 @@ var XX = {
 		},
 	'heraldique': {
 		'PPE': 10,
+		'special': [
+				{'attribute': 'REP', 'modif': +10, 'limit': "héraldique" },
+			],
 		},
 	'histoire': {
-		'PPE': 40, //TODO fonctor
+		'PPE': 40, //TODO fonctor (30 if vieux)
+		'modifs': [
+				{'attribute': 'PP', 'modif': +20 },
+			],
 		},
 	'lire et ecrire': {
-		'PPE': 10, //TODO fonctor
+		'PPE': 10, //TODO fonctor (5 if vieux, 0 if histoire)
 		},
 	"maitre d'arme": {  //TODO gear-linked
 		'PPE': 40, 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +15 },
-				{'attribute': 'COM', 'modif': +30, 'limit': "une épée" },
-				{'attribute': 'COM', 'modif': -60, 'limit': "viser" },
+				{'attribute': 'COM', 'modif': +30, 'limit': "une épée" }, // or TIR for sniper
+				{'attribute': 'COM', 'modif': -60, 'limit': "viser" }, // or TIR for sniper
 			],
 		},
 	'manipulation': {
@@ -581,7 +590,7 @@ var XX = {
 			],
 		},
 	'manufacture de vetements': {
-		'PPE': 30, 
+		'PPE': 25, 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +10 },
 			],
@@ -620,13 +629,13 @@ var XX = {
 			],
 		},
 	'pose de piege': {
-		'PPE': 20, 
+		'PPE': 25, 
 		'special': [
 				{'attribute': 'POP'},
 			],
 		},
 	"resistance a l'alcool": {
-		'PPE': 20, //TODO fonctor
+		'PPE': 20, //TODO fonctor (10 if alcoolique)
 		'modifs': [
 				{'attribute': 'RES', 'modif': 'ENx4' /* TODO fonctor */, 'limit': "alcool" },
 			],
@@ -638,8 +647,11 @@ var XX = {
 				{'attribute': 'PV', 'modif': +4 },
 			],
 		},
-	'riche': {  //TODO gear-linked
+	'richesse': {  //TODO gear-linked (3 objects < 2000)
 		'PPE': 25,
+		'modifs': [
+				{'attribute': 'PP', 'modif': +5 },
+			],
 		},
 	'specialisation en arme': {  //TODO gear-linked
 		'PPE': 10,
