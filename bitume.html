@@ -437,48 +437,48 @@ var XX = {
 	'combat motorise': {
 		'PPE': 40, 
 		'modifs': [
-				{'attribute': 'CON', 'modif': +20, 'limit': "en combat motorisé" },
-				{'attribute': 'REP', 'modif': +20, 'limit': "en combat motorisé" },
-				{'attribute': 'TIR', 'modif': +20, 'limit': "en combat motorisé" },
+				{'attribute': 'CON', 'modif': +20, 'if': "en combat motorisé" },
+				{'attribute': 'REP', 'modif': +20, 'if': "en combat motorisé" },
+				{'attribute': 'TIR', 'modif': +20, 'if': "en combat motorisé" },
 			],
 		},
 	'combat nocturne': {
 		'PPE': 40, 
 		'modifs': [
-				{'attribute': 'REP', 'modif': +10, 'limit': "nocturne" },
-				{'attribute': 'TIR', 'modif': +10, 'limit': "nocturne" },
-				{'attribute': 'ACR', 'modif': +10, 'limit': "nocturne" },
-				{'attribute': 'COM', 'modif': +10, 'limit': "nocturne" },
-				{'attribute': 'DIS', 'modif': +10, 'limit': "nocturne" },
-				{'attribute': 'LAN', 'modif': +10, 'limit': "nocturne" },
+				{'attribute': 'REP', 'modif': +10, 'if': "nocturne" },
+				{'attribute': 'TIR', 'modif': +10, 'if': "nocturne" },
+				{'attribute': 'ACR', 'modif': +10, 'if': "nocturne" },
+				{'attribute': 'COM', 'modif': +10, 'if': "nocturne" },
+				{'attribute': 'DIS', 'modif': +10, 'if': "nocturne" },
+				{'attribute': 'LAN', 'modif': +10, 'if': "nocturne" },
 			],
 		},
 	'combat rural': {
 		'PPE': 40, 
 		'modifs': [
-				{'attribute': 'REP', 'modif': +20, 'limit': "rural" },
-				{'attribute': 'TIR', 'modif': +20, 'limit': "rural" },
-				{'attribute': 'ACR', 'modif': +20, 'limit': "rural" },
-				{'attribute': 'COM', 'modif': +20, 'limit': "rural" },
-				{'attribute': 'DIS', 'modif': +20, 'limit': "rural" },
-				{'attribute': 'LAN', 'modif': +20, 'limit': "rural" },
+				{'attribute': 'REP', 'modif': +20, 'if': "rural" },
+				{'attribute': 'TIR', 'modif': +20, 'if': "rural" },
+				{'attribute': 'ACR', 'modif': +20, 'if': "rural" },
+				{'attribute': 'COM', 'modif': +20, 'if': "rural" },
+				{'attribute': 'DIS', 'modif': +20, 'if': "rural" },
+				{'attribute': 'LAN', 'modif': +20, 'if': "rural" },
 			],
 		},
 	'combat sans arme': {
 		'PPE': 20, 
 		'modifs': [
-				{'attribute': 'COM', 'modif': 'FOx4' /* TODO fonctor */, 'limit': "sans arme" },
+				{'attribute': 'COM', 'modif': 'FOx4' /* TODO fonctor */, 'if': "sans arme" },
 			],
 		},
 	'combat urbain': {
 		'PPE': 30, 
 		'modifs': [
-				{'attribute': 'REP', 'modif': +10, 'limit': "urbain" },
-				{'attribute': 'TIR', 'modif': +10, 'limit': "urbain" },
-				{'attribute': 'ACR', 'modif': +10, 'limit': "urbain" },
-				{'attribute': 'COM', 'modif': +10, 'limit': "urbain" },
-				{'attribute': 'DIS', 'modif': +10, 'limit': "urbain" },
-				{'attribute': 'LAN', 'modif': +10, 'limit': "urbain" },
+				{'attribute': 'REP', 'modif': +10, 'if': "urbain" },
+				{'attribute': 'TIR', 'modif': +10, 'if': "urbain" },
+				{'attribute': 'ACR', 'modif': +10, 'if': "urbain" },
+				{'attribute': 'COM', 'modif': +10, 'if': "urbain" },
+				{'attribute': 'DIS', 'modif': +10, 'if': "urbain" },
+				{'attribute': 'LAN', 'modif': +10, 'if': "urbain" },
 			],
 		},
 	'commandement': {
@@ -490,13 +490,13 @@ var XX = {
 	'conduite specialisee': {
 		'PPE': 10, 
 		'modifs': [
-				{'attribute': 'CON', 'modif': +20, 'limit': "1 véhicule" },
+				{'attribute': 'CON', 'modif': +20, 'if': "1 véhicule" },
 			],
 		},
 	'conduite sportive': {
 		'PPE': 10, 
 		'modifs': [
-				{'attribute': 'CON', 'modif': +20, 'limit': "accélération/freinage" },
+				{'attribute': 'CON', 'modif': +20, 'if': "accélération/freinage" },
 			],
 		},
 	'construction': {
@@ -530,7 +530,7 @@ var XX = {
 	'escalade': {
 		'PPE': 15, 
 		'modifs': [
-				{'attribute': 'ACR', 'modif': +30, 'limit': "escalade" },
+				{'attribute': 'ACR', 'modif': +30, 'if': "escalade" },
 			],
 		},
 	'esquive': {
@@ -547,14 +547,14 @@ var XX = {
 		'PPE': 30, 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +15 },
-				{'attribute': 'MAA', 'modif': +30, 'limit': "armes en métal" },
+				{'attribute': 'MAA', 'modif': +30, 'if': "armes en métal" },
 				{'attribute': 'MEC', 'modif': +20 },
 			],
 		},
 	'heraldique': {
 		'PPE': 10,
 		'special': [
-				{'attribute': 'REP', 'modif': +10, 'limit': "héraldique" },
+				{'attribute': 'REP', 'modif': +10, 'if': "héraldique" },
 			],
 		},
 	'histoire': {
@@ -570,8 +570,8 @@ var XX = {
 		'PPE': 40, 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +15 },
-				{'attribute': 'COM', 'modif': +30, 'limit': "une épée" }, // or TIR for sniper
-				{'attribute': 'COM', 'modif': -60, 'limit': "viser" }, // or TIR for sniper
+				{'attribute': 'COM', 'modif': +30, 'if': "une épée" }, // or TIR for sniper
+				{'attribute': 'COM', 'modif': -60, 'if': "viser" }, // or TIR for sniper
 			],
 		},
 	'manipulation': {
@@ -625,7 +625,7 @@ var XX = {
 	'pistage': {
 		'PPE': 15, 
 		'modifs': [
-				{'attribute': 'REP', 'modif': 'INx3' /* TODO fonctor */, 'limit': "pistage" },
+				{'attribute': 'REP', 'modif': 'INx3' /* TODO fonctor */, 'if': "pistage" },
 			],
 		},
 	'pose de piege': {
@@ -637,7 +637,7 @@ var XX = {
 	"resistance a l'alcool": {
 		'PPE': 20, //TODO fonctor (10 if alcoolique)
 		'modifs': [
-				{'attribute': 'RES', 'modif': 'ENx4' /* TODO fonctor */, 'limit': "alcool" },
+				{'attribute': 'RES', 'modif': 'ENx4' /* TODO fonctor */, 'if': "alcool" },
 			],
 		},
 	'resistant': {
@@ -656,7 +656,7 @@ var XX = {
 	'specialisation en arme': {  //TODO gear-linked
 		'PPE': 10,
 		'modifs': [
-				{'attribute': '?' /* TODO fonctor */, 'modif': +20, 'limit': "une arme" },
+				{'attribute': '?' /* TODO fonctor */, 'modif': +20, 'if': "une arme" },
 			],
 		},
 	'tir indirect': {
@@ -668,38 +668,199 @@ var XX = {
 	'tir rapide': {  //TODO gear-linked
 		'PPE': 15,
 		'modifs': [
-				{'attribute': '?' /* TODO fonctor */, 'modif': +5, 'limit': "une arme" },
-				{'attribute': 'RA', 'modif': 'RA' /* TODO fonctor */, 'limit': "une arme" },
+				{'attribute': '?' /* TODO fonctor */, 'modif': +5, 'if': "une arme" },
+				{'attribute': 'RA', 'modif': 'RA' /* TODO fonctor */, 'if': "une arme" },
 			],
 		},
 	'tricherie': {
 		'PPE': 20,
 		'modifs': [
-				{'attribute': '?' /* TODO */, 'modif': 'INx8' /* TODO fonctor */, 'limit': "triche au jeu" },
+				{'attribute': '?' /* TODO */, 'modif': 'INx8' /* TODO fonctor */, 'if': "triche au jeu" },
 			],
 		},
 
 		  /////////////
 		 // DEFAUTS //
 		/////////////
+	/* (+): gain +5PPE
+	 * (-): gain PPE/2
+	 * one can choose a given flaw only once
+	 * no more than 30PPE (except with only one flaw > 30PPE)
+	 */
 		
 	'alcoolique': {
-		'PPE': -20, 
+		'PPE': -20,
 		'modif': [
 				{'attribute': 'PP', 'modif': -5 },
 			],
 		},
 	'avare': {
-		'PPE': -15, 
+		'PPE': -15,
 		'modif': [
 				{'attribute': 'PP', 'modif': -15 },
+				{'attribute': 'MAR', 'modif': -20 },
 			],
 		},
+	'aversion envers les animaux': {
+		'PPE': -15, // TODO cannot have dressage
+		},
 	'borgne': {
-		'PPE': -15, 
+		'PPE': -10,
 		'modif': [
 				{'attribute': 'SED', 'modif': -30 },
 				{'attribute': 'REP', 'modif': -20 },
+			],
+		},
+	'boulimique': {
+		'PPE': -10,
+		},
+	'bras en moins': {
+		'PPE': -40,
+		'modif': [
+				{'attribute': 'CON', 'modif': -40 },
+				{'attribute': 'SED', 'modif': -30 },
+				{'attribute': 'MEC', 'modif': -50 },
+				{'attribute': 'PRE', 'modif': -30 },
+			],
+		},
+	'cicatrice': {
+		'PPE': -5,
+		'modif': [
+				{'attribute': 'SED', 'modif': -20 },
+			],
+		},
+	'borgne': {
+		'PPE': -10,
+		'modif': [
+				{'attribute': 'SED', 'modif': -30 },
+				{'attribute': 'REP', 'modif': -20 },
+			],
+		},
+	"code d'honneur": {
+		'PPE': -5, // TODO -5-40
+		},
+	'dandy': {
+		'PPE': -10,
+		'modif': [
+				{'attribute': 'DIS', 'modif': -20 },
+			],
+		},
+	'desagreable': {
+		'PPE': -10,
+		'modif': [
+				{'attribute': 'MAR', 'modif': -90 },
+				{'attribute': 'SED', 'modif': -50 },
+			],
+		},
+	'fou': {
+		'PPE': -15, // TODO -15-40 ; liste folies
+		'modif': [
+				{'attribute': 'PP', 'modif': -20 },
+			],
+		},
+	'fugitif': {
+		'PPE': -30,
+		},
+	'galant': {
+		'PPE': -15,
+		},
+	'impuissant': {
+		'PPE': -15,
+		'modif': [
+				{'attribute': 'PP', 'modif': -15 },
+				{'attribute': 'SED', 'modif': -90, 'if': "connu" },
+			],
+		},
+	'impulsif': {
+		'PPE': -20,
+		'modif': [
+				{'attribute': 'PP', 'modif': -5 },
+				{'attribute': 'MAR', 'modif': -30 },
+				{'attribute': 'SED', 'modif': -15 },
+			],
+		},
+	'jambe en moins': {
+		'PPE': -40,
+		'modif': [
+				{'attribute': 'CON', 'modif': -40 },
+				{'attribute': 'SED', 'modif': -30 },
+				{'attribute': 'COM', 'modif': -50 },
+				{'attribute': 'DIS', 'modif': -20 },
+				{'attribute': 'ACR', 'modif': -50 },
+			],
+		},
+	'jeune': {
+		'PPE': -10, // cannot have vieux flaw
+		'modif': [
+				{'attribute': 'FO', 'modif': -2 },
+				{'attribute': 'EN', 'modif': -1 },
+			],
+		},
+	'loyal': {
+		'PPE': -15,
+		},
+	'malchanceux': {
+		'PPE': -30,
+		},
+	'misogyne': {
+		'PPE': -10,
+		'modif': [
+				{'attribute': 'SED', 'modif': -50, 'if': "femmes" },
+				{'attribute': 'MAR', 'modif': -30, 'if': "femmes" },
+			],
+		},
+	'misandre': {
+		'PPE': -10,
+		'modif': [
+				{'attribute': 'SED', 'modif': -50, 'if': "hommes" },
+				{'attribute': 'MAR', 'modif': -30, 'if': "hommes" },
+			],
+		},
+	'muet': {
+		'PPE': -25,
+		'modif': [
+				{'attribute': 'SED', 'modif': -10 },
+				{'attribute': 'MAR', 'modif': -40 },
+			],
+		},
+	'naif': {
+		'PPE': -25,
+		},
+	'obsede sexuel': {
+		'PPE': -25,
+		'modif': [
+				{'attribute': 'SED', 'modif': -80, 'if': "sexe préféré" },
+				{'attribute': 'MAR', 'modif': -50, 'if': "sexe préféré" },
+			],
+		},
+	'pensif': {
+		'PPE': -10,
+		'modif': [
+				{'attribute': 'RA', 'modif': -RA/2/*TODO fonctor*/, 'if': "surpris" },
+				{'attribute': 'talents'/*TODO*/, 'modif': -20, 'if': "surpris" },
+			],
+		},
+	'phobie': {
+		'PPE': -5, // -5-40 liste phobies
+		},
+	'reserve': {
+		'PPE': -10,
+		'modif': [
+				{'attribute': 'MAR', 'modif': -20 },
+			],
+		},
+	'sourd': {
+		'PPE': -20,
+		'modif': [
+				{'attribute': 'SED', 'modif': -10 },
+				{'attribute': 'MAR', 'modif': -40 },
+			],
+		},
+	'vieux': {
+		'PPE': -15, // cannot be jeune
+		'modif': [
+				{'attribute': 'FO', 'modif': -2 },
+				{'attribute': 'EN', 'modif': -2 },
 			],
 		},
 }
