@@ -5,7 +5,7 @@ var ATTRIBUTES = {
 		'PR', 'PE', 'IN', 'BE',
 	],
 	'secondary' : [
-		'SI', 'PV', 'PP', 'CH',
+		'SI', 'PV', 'PP', 'CH', 'PPE',
 	],
 	'skill' : {
 		'ACR': ['AG', 'PR', "Acrobatie"],
@@ -772,6 +772,9 @@ function updatePCAttribute(id) {
 			break;
 		case 'PP':
 			PC[id] = PC['IN'] + PC['BE'];
+			break;
+		case 'PPE':
+			PC[id] = PC.ppe;
 			break;
 		case 'CH':
 			PC[id] = (PC['FO'] + PC['EN']) *1.5;
