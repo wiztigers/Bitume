@@ -247,6 +247,10 @@ var SPECIALS = {
 				{'attribute': 'PP', 'modif': +15 },
 			],
 		},
+	'course': {
+		'label': "Course",
+		'PPE': 10, 
+		},
 	'dessin': {
 		'label': "Dessin",
 		'PPE': 10, 
