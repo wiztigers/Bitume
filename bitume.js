@@ -45,73 +45,91 @@ var GENDER = {
 
 var TRIBE = {
 	'amazones': {
+		'label': "Amazones",
 		'RA': +1, 'BE': +1,
 		'DIS': +10, 'MAR': -20, 'TIR': +20,
 	},
 	'confrerie du serpent': {
+		'label': "Confrérie du serpent",
 		'PE': +1, 'PR': +1,
 		'CON': -50, 'DIS': +20, 'TIR': +10,
 	},
 	'enfants': {
+		'label': "Enfants",
 		'AG': +1, 'RA': +1,
 		'DIS': +20, 'REP': +10, 'ACR': +20, 'MAR': -20,
 	},
 	'conservateurs': {
+		'label': "Conservateurs",
 		'IN': +1, 'FO': -1, 'EN': -1,
 		'CON': -10, 'TIR': -20, 'COM': -30, 'RES': -40,
 	},
 	'fils du metal': {
+		'label': "Fils du métal",
 		'IN': -2, 'RA': +1,
 		'CON': +20, 'TIR': +20, 'MAR': -20, 'PRE': -30,
 	},
 	'fermiers': {
+		'label': "Fermiers",
 		'BE': -1, 'EN': +1,
 		'MAR': +10, 'CON': -20,
 	},
 	'guerisseurs': {
+		'label': "Guérisseurs",
 		'IN': +2, 'PE': +1, 'PR': +1,
 		'PRE': +30, 'DIS': +10,
 	},
 	'garagistes': {
+		'label': "Garagistes",
 		'IN': +1, 'PR': +1,
 		'CON': +10, 'MEC': +30,
 	},
 	'skinheads': {
+		'label': "Skinheads",
 		'FO': +1, 'PE': -1,
 		'MAR': -10, 'COM': +10, 'TIR': +10, 'DIS': -10,
 	},
 	'punks': {
 		'AG': +1, 'RA': +1, 'FO': -1,
+		'label': "Punks",
 		'COM': +10, 'DIS': +20, 'MAR': -20, 'ACR': +10, 'TIR': +10,
 	},
 	'yankees': {
+		'label': "Yankees",
 		'PR': +1, 'PE': +1,
 		'DIS': +10, 'ACR': +10, 'TIR': +10, 'RES': -10, 'MAR': -20, 
 	},
 	'vikings': {
+		'label': "Vikings",
 		'FO': +1, 'EN': +1, 'RA': -1,
 		'COM': +20,
 	},
 	'indiens': {
+		'label': "Indiens",
 		'AG': +1, 'RA': +1, 'PE': +1,
 		'MAR': -20, 'REP': +10, 'DIS': +10, 'TIR': +10, 'REP': +20, 'CON': +5,
 	},
 	"hell's angels": {
+		'label': "Hell's Angels",
 		'FO': +1, 'EN': +1,
 		'CON': +20, 'COM': +10,
 	},
 	'mercenaires': {
+		'label': "Mercenaires",
 		'RA': +1, 'PR': +1, 'PE': +1,
 		'COM': +10, 'CON': +10, 'LAN': +5, 'TIR': +10,
 	},
 	'marchands': {
+		'label': "Marchands",
 		'IN': +2, 'EN': -1, 'PE': +1,
 		'MAR': +30, 'REP': +10,
 	},
 	'justiciers': {
+		'label': "Justiciers",
 		'CON': +10, 'TIR': +10, 'COM': +10,
 	},
 	'cro-mags': {
+		'label': "Cro-mags",
 		'FO': +2, 'EN': +3, 'IN': -3,
 		'CON': -70, 'COM': +30, 'DIS': +30, 'REP': +10, 'MEC': -50, 'MAR': -20,
 	},
@@ -761,7 +779,9 @@ function onGender(selector) {
 function updateTribe(op, tribe) {
 	var attributes = Object.keys(TRIBE[tribe]);
 	for (var i = 0; i < attributes.length; i++) {
-		updateModifier(op, TRIBE, attributes[i], tribe);
+		var id = attributes[i];
+		if (id != 'label' && id != '+' && id != '-')
+			updateModifier(op, TRIBE, id, tribe);
 	}
 }
 
@@ -823,7 +843,6 @@ function initializeSkillsSection() {
 		var description = l[2].toUpperCase();
 		var visibility = "";
 		if (l[3] == false) visibility = " style='display: none;'";
-		console.log('must create: '+id+' '+ATTRIBUTES['skill'][id]);
 		container.innerHTML += "\n"
 +"		<div class='attribute'"+visibility+">\n"
 +"			<div class='column'>\n"
@@ -835,8 +854,19 @@ function initializeSkillsSection() {
 	}
 }
 
+function initializeTribeOptions() {
+	var container = document.getElementById('tribe');
+	var tribes = Object.keys(TRIBE);
+	for (var i = 0; i < tribes.length; i++) {
+		var id = tribes[i];
+		var label = TRIBE[id]['label'];
+		container.innerHTML += "\n				<option value='"+id+"'>"+label+"</option>";
+	}
+}
+
 function initializeSections() {
 	initializeSkillsSection();
+	initializeTribeOptions();
 }
 
 initializeSections();
