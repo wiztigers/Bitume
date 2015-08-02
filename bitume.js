@@ -11,8 +11,8 @@ var ATTRIBUTES = {
 		'ACR': ['AG', 'PR', "Acrobatie"],
 		'COM': ['AG', 'FO', "Combat"],
 		'CON': ['PR', 'RA', "Conduite"],
-		'DET': ['IN', 'PR', "Démolition (Transp.)", false],
 		'DEP': ['PR', 'PE', "Démolition (Pose)", false],
+		'DET': ['IN', 'PR', "Démolition (Transp.)", false],
 		'DRE': ['IN', 'PE', "Dessage", false],
 		'DIS': ['AG', 'IN', "Discrétion"],
 		'LAN': ['FO', 'PR', "Lancer"],
@@ -135,34 +135,40 @@ var TRIBE = {
 	},
 };
 
-var XX = {
+var SPECIALS = {
 
 		  //////////////////////
 		 // TALENTS SPECIAUX //
 		//////////////////////
 
 	'agriculture et élevage': {
+		'label': "Agriculture et élevage",
 		'PPE': 10, 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +15 },
 			],
 		},
 	'amitie': {
+		'label': "Amitié",
 		'PPE': 50, 
 		},
 	'camouflage': {
+		'label': "Camouflage",
 		'PPE': 25, 
 		},
 	'celebrite': {
+		'label': "Célébrité",
 		'PPE': 10, 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +30 },
 			],
 		},
 	'chance': {
+		'label': "Chance",
 		'PPE': 40, 
 		},
 	'combat motorise': {
+		'label': "Combat motorisé",
 		'PPE': 40, 
 		'modifs': [
 				{'attribute': 'CON', 'modif': +20, 'if': "en combat motorisé" },
@@ -171,6 +177,7 @@ var XX = {
 			],
 		},
 	'combat nocturne': {
+		'label': "Combat nocturne",
 		'PPE': 40, 
 		'modifs': [
 				{'attribute': 'REP', 'modif': +10, 'if': "nocturne" },
@@ -182,6 +189,7 @@ var XX = {
 			],
 		},
 	'combat rural': {
+		'label': "Combat rural",
 		'PPE': 40, 
 		'modifs': [
 				{'attribute': 'REP', 'modif': +20, 'if': "rural" },
@@ -193,12 +201,14 @@ var XX = {
 			],
 		},
 	'combat sans arme': {
+		'label': "Combat sans arme",
 		'PPE': 20, 
 		'modifs': [
 				{'attribute': 'COM', 'modif': 'FOx4' /* TODO fonctor */, 'if': "sans arme" },
 			],
 		},
 	'combat urbain': {
+		'label': "Combat urbain",
 		'PPE': 30, 
 		'modifs': [
 				{'attribute': 'REP', 'modif': +10, 'if': "urbain" },
@@ -210,61 +220,67 @@ var XX = {
 			],
 		},
 	'commandement': {
+		'label': "Commandement",
 		'PPE': 25, // INx5 PJ 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +20 },
 			],
 		},
 	'conduite specialisee': {
+		'label': "Conduite spécialisée",
 		'PPE': 10, 
 		'modifs': [
 				{'attribute': 'CON', 'modif': +20, 'if': "1 véhicule" },
 			],
 		},
 	'conduite sportive': {
+		'label': "Conduite sportive",
 		'PPE': 10, 
 		'modifs': [
 				{'attribute': 'CON', 'modif': +20, 'if': "accélération/freinage" },
 			],
 		},
 	'construction': {
+		'label': "Construction",
 		'PPE': 20, 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +15 },
 			],
 		},
 	'dessin': {
+		'label': "Dessin",
 		'PPE': 10, 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +10 },
 			],
 		},
 	'deguisement': {
+		'label': "Déguisement",
 		'PPE': 35, 
 		},
 	'demolition': {
+		'label': "Démolition",
 		'PPE': 35, 
-		'special': [
-				{'attribute': 'DET'},
-				{'attribute': 'DEP'},
-			],
+		'skills': ['DET', 'DEP'],
 		},
 	"dressage d'animaux": {
+		'label': "Dressage d'animaux",
 		'PPE': 30, 
-		'special': [
-				{'attribute': 'DRE'},
-			],
+		'skills': ['DRE'],
 		},
 	'escalade': {
+		'label': "Escalade",
 		'PPE': 15, 
 		'modifs': [
 				{'attribute': 'ACR', 'modif': +30, 'if': "escalade" },
 			],
 		},
 	'esquive': {
+		'label': "Esquive",
 		'PPE': 20,
 		},
 	'flatterie': {
+		'label': "Flatterie",
 		'PPE': 20, 
 		'modifs': [
 				{'attribute': 'MAR', 'modif': 'INx3' }, //TODO fonctor
@@ -272,6 +288,7 @@ var XX = {
 			],
 		},
 	'forgeron': {
+		'label': "Forgeron",
 		'PPE': 30, 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +15 },
@@ -280,21 +297,25 @@ var XX = {
 			],
 		},
 	'heraldique': {
+		'label': "Héraldique",
 		'PPE': 10,
-		'special': [
+		'modifs': [
 				{'attribute': 'REP', 'modif': +10, 'if': "héraldique" },
 			],
 		},
 	'histoire': {
+		'label': "Histoire",
 		'PPE': 40, //TODO fonctor (30 if vieux)
 		'modifs': [
 				{'attribute': 'PP', 'modif': +20 },
 			],
 		},
 	'lire et ecrire': {
+		'label': "Lire et écrire",
 		'PPE': 10, //TODO fonctor (5 if vieux, 0 if histoire)
 		},
 	"maitre d'arme": {  //TODO gear-linked
+		'label': "Maître d'armes",
 		'PPE': 40, 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +15 },
@@ -303,72 +324,74 @@ var XX = {
 			],
 		},
 	'manipulation': {
+		'label': "Manipulation",
 		'PPE': 30, 
-		'special': [
-				{'attribute': 'MAN'},
-			],
+		'skills': ['MAN'],
 		},
 	"manufacture d'armes": {
+		'label': "Manufacture d'armes",
 		'PPE': 40, 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +20 },
 			],
-		'special': [
-				{'attribute': 'MAA'},
-			],
+		'skills': ['MAA'],
 		},
 	'manufacture de vetements': {
+		'label': "Manufacture de vêtements",
 		'PPE': 25, 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +10 },
 			],
-		'special': [
-				{'attribute': 'MAV'},
-			],
+		'skills': ['MAV'],
 		},
 	'maquillage': {  //TODO gear-linked
+		'label': "Maquillage",
 		'PPE': 5, 
 		'modifs': [
 				{'attribute': 'SED', 'modif': '5/15' }, //TODO fonctor
 			],
 		},
 	'musicien': {
+		'label': "Musicien",
 		'PPE': 10, 
 		'modifs': [
 				{'attribute': 'PP', 'modif': +5 },
 			],
 		},
 	'nage': {
+		'label': "Nage",
 		'PPE': 20, 
-		'special': [
-				{'attribute': 'NAG'},
-			],
+		'skills': ['NAG'],
 		},
 	'parade': {
+		'label': "Parade",
 		'PPE': 20, 
 		},
 	'peche': {
+		'label': "Pêche",
 		'PPE': 20, 
 		},
 	'pistage': {
+		'label': "Pistage",
 		'PPE': 15, 
 		'modifs': [
 				{'attribute': 'REP', 'modif': 'INx3' /* TODO fonctor */, 'if': "pistage" },
 			],
 		},
 	'pose de piege': {
+		'label': "Pose de pièges",
 		'PPE': 25, 
-		'special': [
-				{'attribute': 'POP'},
-			],
+		'skills': ['POP'],
 		},
 	"resistance a l'alcool": {
+		'label': "Résistance à l'alcool",
 		'PPE': 20, //TODO fonctor (10 if alcoolique)
 		'modifs': [
 				{'attribute': 'RES', 'modif': 'ENx4' /* TODO fonctor */, 'if': "alcool" },
 			],
 		},
 	'resistant': {
+		'label': "Résistant",
 		'PPE': 15,
 		'modifs': [
 				{'attribute': 'SI', 'modif': +2 },
@@ -376,24 +399,26 @@ var XX = {
 			],
 		},
 	'richesse': {  //TODO gear-linked (3 objects < 2000)
+		'label': "Richesse",
 		'PPE': 25,
 		'modifs': [
 				{'attribute': 'PP', 'modif': +5 },
 			],
 		},
 	'specialisation en arme': {  //TODO gear-linked
+		'label': "Spécialisation en arme",
 		'PPE': 10,
 		'modifs': [
 				{'attribute': '?' /* TODO fonctor */, 'modif': +20, 'if': "une arme" },
 			],
 		},
 	'tir indirect': {
+		'label': "Tir indirect",
 		'PPE': 20, 
-		'special': [
-				{'attribute': 'TIN'},
-			],
+		'skills': ['TIN'],
 		},
 	'tir rapide': {  //TODO gear-linked
+		'label': "Tir rapide",
 		'PPE': 15,
 		'modifs': [
 				{'attribute': '?' /* TODO fonctor */, 'modif': +5, 'if': "une arme" },
@@ -401,6 +426,7 @@ var XX = {
 			],
 		},
 	'tricherie': {
+		'label': "Tricherie",
 		'PPE': 20,
 		'modifs': [
 				{'attribute': '?' /* TODO */, 'modif': 'INx8' /* TODO fonctor */, 'if': "triche au jeu" },
@@ -417,12 +443,14 @@ var XX = {
 	 */
 		
 	'alcoolique': {
+		'label': "Alcoolique",
 		'PPE': -20,
 		'modif': [
 				{'attribute': 'PP', 'modif': -5 },
 			],
 		},
 	'avare': {
+		'label': "Avare",
 		'PPE': -15,
 		'modif': [
 				{'attribute': 'PP', 'modif': -15 },
@@ -430,9 +458,11 @@ var XX = {
 			],
 		},
 	'aversion envers les animaux': {
+		'label': "Aversion envers les animaux",
 		'PPE': -15, // TODO cannot have dressage
 		},
 	'borgne': {
+		'label': "Borgne",
 		'PPE': -10,
 		'modif': [
 				{'attribute': 'SED', 'modif': -30 },
@@ -440,9 +470,11 @@ var XX = {
 			],
 		},
 	'boulimique': {
+		'label': "Boulimique",
 		'PPE': -10,
 		},
 	'bras en moins': {
+		'label': "Bras en moins",
 		'PPE': -40,
 		'modif': [
 				{'attribute': 'CON', 'modif': -40 },
@@ -452,28 +484,25 @@ var XX = {
 			],
 		},
 	'cicatrice': {
+		'label': "Cicatrice",
 		'PPE': -5,
 		'modif': [
 				{'attribute': 'SED', 'modif': -20 },
 			],
 		},
-	'borgne': {
-		'PPE': -10,
-		'modif': [
-				{'attribute': 'SED', 'modif': -30 },
-				{'attribute': 'REP', 'modif': -20 },
-			],
-		},
 	"code d'honneur": {
+		'label': "Code d'honneur",
 		'PPE': -5, // TODO -5-40
 		},
 	'dandy': {
+		'label': "Dandy",
 		'PPE': -10,
 		'modif': [
 				{'attribute': 'DIS', 'modif': -20 },
 			],
 		},
 	'desagreable': {
+		'label': "Désagrable",
 		'PPE': -10,
 		'modif': [
 				{'attribute': 'MAR', 'modif': -90 },
@@ -481,18 +510,22 @@ var XX = {
 			],
 		},
 	'fou': {
+		'label': "Fou",
 		'PPE': -15, // TODO -15-40 ; liste folies
 		'modif': [
 				{'attribute': 'PP', 'modif': -20 },
 			],
 		},
 	'fugitif': {
+		'label': "Fugitif",
 		'PPE': -30,
 		},
 	'galant': {
+		'label': "Galant",
 		'PPE': -15,
 		},
 	'impuissant': {
+		'label': "Impuissant",
 		'PPE': -15,
 		'modif': [
 				{'attribute': 'PP', 'modif': -15 },
@@ -500,6 +533,7 @@ var XX = {
 			],
 		},
 	'impulsif': {
+		'label': "Impulsif",
 		'PPE': -20,
 		'modif': [
 				{'attribute': 'PP', 'modif': -5 },
@@ -508,6 +542,7 @@ var XX = {
 			],
 		},
 	'jambe en moins': {
+		'label': "Jambe en moins",
 		'PPE': -40,
 		'modif': [
 				{'attribute': 'CON', 'modif': -40 },
@@ -518,6 +553,7 @@ var XX = {
 			],
 		},
 	'jeune': {
+		'label': "Jeune",
 		'PPE': -10, // cannot have vieux flaw
 		'modif': [
 				{'attribute': 'FO', 'modif': -2 },
@@ -525,12 +561,15 @@ var XX = {
 			],
 		},
 	'loyal': {
+		'label': "Loyal",
 		'PPE': -15,
 		},
 	'malchanceux': {
+		'label': "Malchanceux",
 		'PPE': -30,
 		},
 	'misogyne': {
+		'label': "Misogyne",
 		'PPE': -10,
 		'modif': [
 				{'attribute': 'SED', 'modif': -50, 'if': "femmes" },
@@ -538,6 +577,7 @@ var XX = {
 			],
 		},
 	'misandre': {
+		'label': "Misandre",
 		'PPE': -10,
 		'modif': [
 				{'attribute': 'SED', 'modif': -50, 'if': "hommes" },
@@ -545,6 +585,7 @@ var XX = {
 			],
 		},
 	'muet': {
+		'label': "Muet",
 		'PPE': -25,
 		'modif': [
 				{'attribute': 'SED', 'modif': -10 },
@@ -552,9 +593,11 @@ var XX = {
 			],
 		},
 	'naif': {
+		'label': "Naïf",
 		'PPE': -25,
 		},
 	'obsede sexuel': {
+		'label': "Obsédé sexuel",
 		'PPE': -25,
 		'modif': [
 				{'attribute': 'SED', 'modif': -80, 'if': "sexe préféré" },
@@ -562,6 +605,7 @@ var XX = {
 			],
 		},
 	'pensif': {
+		'label': "Pensif",
 		'PPE': -10,
 		'modif': [
 				{'attribute': 'RA', 'modif': 0 /* TODO fonctor -RA/2*/, 'if': "surpris" },
@@ -569,15 +613,18 @@ var XX = {
 			],
 		},
 	'phobie': {
+		'label': "Phobie",
 		'PPE': -5, // -5-40 liste phobies
 		},
 	'reserve': {
+		'label': "Réservé",
 		'PPE': -10,
 		'modif': [
 				{'attribute': 'MAR', 'modif': -20 },
 			],
 		},
 	'sourd': {
+		'label': "Sourd",
 		'PPE': -20,
 		'modif': [
 				{'attribute': 'SED', 'modif': -10 },
@@ -585,6 +632,7 @@ var XX = {
 			],
 		},
 	'vieux': {
+		'label': "Vieux",
 		'PPE': -15, // cannot be jeune
 		'modif': [
 				{'attribute': 'FO', 'modif': -2 },
@@ -594,25 +642,39 @@ var XX = {
 }
 
 var MODIFS = {
+	// primary
 	FO:0, AG:0, RA:0, EN:0,
 	PR:0, PE:0, IN:0, BE:0,
+	// skills
 	ACR:0, COM:0, CON:0, DIS:0,
 	LAN:0, MAR:0, MEC:0, PRE:0,
 	REP:0, RES:0, SED:0, TIR:0,
+	// edge skills
+	DEP:0, DET:0, DRE:0,
+	MAN:0, MAA:0, MAV:0,
+	NAG:0, POP:0, TIN:0,
 }
 
 var POINTS = {
+	// primary
 	FO:5, AG:5, RA:5, EN:5,
 	PR:5, PE:5, IN:5, BE:5,
+	// skills
 	ACR:0, COM:0, CON:0, DIS:0,
 	LAN:0, MAR:0, MEC:0, PRE:0,
 	REP:0, RES:0, SED:0, TIR:0,
+	// edge skills
+	DEP:0, DET:0, DRE:0,
+	MAN:0, MAA:0, MAV:0,
+	NAG:0, POP:0, TIN:0,
 }
-
-var PC = { };
 
 var MAXIMUM_PRIMARY_POINTS = 40;
 var MAXIMUM_PPE = 50;
+
+var PC = {
+	ppe: MAXIMUM_PPE,
+};
 
 function dumpPC() {
 	console.log("----------------------------------------"
@@ -621,19 +683,29 @@ function dumpPC() {
 		+'PR:'+PC.PR+' PE:'+PC.PE+' IN:'+PC.IN+' BE:'+PC.BE+'\n'
 		+'ACR:'+PC.ACR+' COM:'+PC.COM+' CON:'+PC.CON+' DIS:'+PC.DIS+' '
 		+'LAN:'+PC.LAN+' MAR:'+PC.MAR+' MEC:'+PC.MEC+' PRE:'+PC.PRE+' '
-		+'REP:'+PC.REP+' RES:'+PC.RES+' SED:'+PC.SED+' TIR:'+PC.TIR+' '
+		+'REP:'+PC.REP+' RES:'+PC.RES+' SED:'+PC.SED+' TIR:'+PC.TIR+'\n'
+		+'DEP:'+PC.DEP+' DET:'+PC.DET+' DRE:'+PC.DRE+' '
+		+'MAN:'+PC.MAN+' MAA:'+PC.MAA+' MAV:'+PC.MAV+' '
+		+'NAG:'+PC.NAG+' POP:'+PC.POP+' TIN:'+PC.TIN+' '
 		+"\n--- POINTS:\n"
 		+'FO:'+POINTS.FO+' AG:'+POINTS.AG+' RA:'+POINTS.RA+' EN:'+POINTS.EN+' '
 		+'PR:'+POINTS.PR+' PE:'+POINTS.PE+' IN:'+POINTS.IN+' BE:'+POINTS.BE+'\n'
 		+'ACR:'+POINTS.ACR+' COM:'+POINTS.COM+' CON:'+POINTS.CON+' DIS:'+POINTS.DIS+' '
 		+'LAN:'+POINTS.LAN+' MAR:'+POINTS.MAR+' MEC:'+POINTS.MEC+' PRE:'+POINTS.PRE+' '
-		+'REP:'+POINTS.REP+' RES:'+POINTS.RES+' SED:'+POINTS.SED+' TIR:'+POINTS.TIR+' '
+		+'REP:'+POINTS.REP+' RES:'+POINTS.RES+' SED:'+POINTS.SED+' TIR:'+POINTS.TIR+'\n'
+		+'DEP:'+POINTS.DEP+' DET:'+POINTS.DET+' DRE:'+POINTS.DRE+' '
+		+'MAN:'+POINTS.MAN+' MAA:'+POINTS.MAA+' MAV:'+POINTS.MAV+' '
+		+'NAG:'+POINTS.NAG+' POP:'+POINTS.POP+' TIN:'+POINTS.TIN+'\n'
+		+'Available PPE:'+PC.ppe
 		+"\n--- MODIFS:\n"
 		+'FO:'+MODIFS.FO+' AG:'+MODIFS.AG+' RA:'+MODIFS.RA+' EN:'+MODIFS.EN+' '
 		+'PR:'+MODIFS.PR+' PE:'+MODIFS.PE+' IN:'+MODIFS.IN+' BE:'+MODIFS.BE+'\n'
 		+'ACR:'+MODIFS.ACR+' COM:'+MODIFS.COM+' CON:'+MODIFS.CON+' DIS:'+MODIFS.DIS+' '
 		+'LAN:'+MODIFS.LAN+' MAR:'+MODIFS.MAR+' MEC:'+MODIFS.MEC+' PRE:'+MODIFS.PRE+' '
-		+'REP:'+MODIFS.REP+' RES:'+MODIFS.RES+' SED:'+MODIFS.SED+' TIR:'+MODIFS.TIR+' '
+		+'REP:'+MODIFS.REP+' RES:'+MODIFS.RES+' SED:'+MODIFS.SED+' TIR:'+MODIFS.TIR+'\n'
+		+'DEP:'+MODIFS.DEP+' DET:'+MODIFS.DET+' DRE:'+MODIFS.DRE+' '
+		+'MAN:'+MODIFS.MAN+' MAA:'+MODIFS.MAA+' MAV:'+MODIFS.MAV+' '
+		+'NAG:'+MODIFS.NAG+' POP:'+MODIFS.POP+' TIN:'+MODIFS.TIN+' '
 		+"\n----------------------------------------"
 	);
 }
@@ -661,14 +733,17 @@ function getCurrentPoints(type) {
 	if (type == 'skill')
 		return POINTS.ACR + POINTS.COM + POINTS.CON + POINTS.DIS
 			 + POINTS.LAN + POINTS.MAR + POINTS.MEC + POINTS.PRE
-			 + POINTS.REP + POINTS.RES + POINTS.SED + POINTS.TIR;
+			 + POINTS.REP + POINTS.RES + POINTS.SED + POINTS.TIR
+			 + POINTS.DEP + POINTS.DET + POINTS.DRE
+			 + POINTS.MAN + POINTS.MAA + POINTS.MAV
+			 + POINTS.NAG + POINTS.POP + POINTS.TIN;
 }
 
 function getAvailablePoints(type) {
 	if (type == 'primary')
 		return MAXIMUM_PRIMARY_POINTS - getCurrentPoints(type);
 	if (type == 'skill')
-		return MAXIMUM_PPE - getCurrentPoints(type);
+		return PC.ppe;
 }
 
 function getBaseSkill(id) {
@@ -823,7 +898,9 @@ function updatePC() {
 
 function onAttribute(selector) {
 	var id = selector.id;
-	POINTS[id] += (selector.valueAsNumber - PC[id]);
+	var points = (selector.valueAsNumber - PC[id]);
+	POINTS[id] += points;
+	if (getAttributeType(id) == 'skill') PC.ppe -= points;
 	updatePCAttribute(id);
 	updatePC();
 }
@@ -841,10 +918,10 @@ function initializeSkillsSection() {
 		var id = skills[i];
 		var l = ATTRIBUTES['skill'][id];
 		var description = l[2].toUpperCase();
-		var visibility = "";
-		if (l[3] == false) visibility = " style='display: none;'";
+		var display = "";
+		if (l[3] == false) display = " style='display: none;'";
 		container.innerHTML += "\n"
-+"		<div class='attribute'"+visibility+">\n"
++"		<div class='attribute'"+display+">\n"
 +"			<div class='column'>\n"
 +"				<label for'"+id+"'>"+description+" ("+id+")</label>\n"
 +"				<span id='"+id+"formula'>"+id+" = ("+l[0]+" + "+l[1]+") × 5</span>\n"
@@ -864,9 +941,107 @@ function initializeTribeOptions() {
 	}
 }
 
+function getSpecialCost(id) {
+	var cost = SPECIALS[id]['PPE'];
+	//TODO put PC.tribe in da mix
+	return cost;
+}
+
+function hideSkill(id, hidden) {
+	var display = '';
+	if (hidden) display = 'display: none;';
+	document.getElementById(id).parentElement.style = display;
+}
+
+function updateSpecialSkills(skills, removed) {
+	if (!skills) return;
+	for (var i = 0; i < skills.length; i++) {
+		var skill_id = skills[i];
+		hideSkill(skill_id, removed);
+		if (removed) {
+			PC.ppe += POINTS[skill_id];
+			POINTS[skill_id] = 0;
+		}
+	}
+}
+function updateSpecialCost(id, removed) {
+	var cost = getSpecialCost(id);
+	if (removed) PC.ppe += cost;
+	else PC.ppe -= cost;
+}
+
+function updateSpecial(id, removed) {
+	updateSpecialSkills(SPECIALS[id]['skills'], removed);
+	updateSpecialCost(id, removed);
+	updatePC();
+}
+
+function onSpecial(old_id, new_id) {
+	console.log('onSpecial('+old_id+', '+new_id+')');
+	if (old_id != '') {
+		updateSpecial(old_id, true);
+	}
+	if (new_id != '') {
+		console.log('add: '+new_id);
+		updateSpecial(new_id, false);
+	}
+}
+
+var gEdgeBoxes = 0;
+
+function createSpecialSelector(index, isEdge) {
+	var element = document.createElement('div');
+	element.className = 'attribute';
+	var select = document.createElement('select');
+	select.id = 'special'+index;
+	select.className = 'combobox';
+	select.onfocus = function () { this.oldvalue = this.value; };
+	select.onchange = function () { onSpecial(this.oldvalue, this.value); this.oldvalue = this.value; };
+	// create empty default value
+	var option = document.createElement('option');
+	option.value = '';
+	option.innerHTML = "---";
+	select.appendChild(option);
+	// create an option for each edge or flaw, depending of type
+	var specials = Object.keys(SPECIALS);
+	for (var i = 0; i < specials.length; i++) {
+		var id = specials[i];
+		var cost = SPECIALS[id]['PPE'];
+		var label = SPECIALS[id]['label'];
+		if (!isSpecialValidAsOption(id, label, cost, isEdge)) continue;
+		option = document.createElement('option');
+		option.value = id;
+		option.innerHTML = label;
+		select.appendChild(option);
+	}
+	element.appendChild(select);
+	return element;
+}
+function isSpecialValidAsOption(id, label, cost, isEdge) {
+	var validity = true;
+	if(!label) {
+		console.warn("option \""+id+"\" has no label ; skip");
+		validity = false;
+	}
+	if(!cost) {
+		console.warn("option \""+id+"\" has no PPE cost ; skip");
+		validity = false;
+	}
+	if ( isEdge && cost < 0) validity = false;//don't put flaws in edge selector
+	if (!isEdge && cost >= 0) validity = false;//don't put edges in flaw selector
+	return validity;
+}
+
+function initializeEdgesComboboxes() {
+	var section = document.getElementById('edges');
+	section.appendChild(createSpecialSelector(gEdgeBoxes, true));
+	gEdgeBoxes++;
+}
+
 function initializeSections() {
 	initializeSkillsSection();
 	initializeTribeOptions();
+	initializeEdgesComboboxes();
 }
 
 initializeSections();
