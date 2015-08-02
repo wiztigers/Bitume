@@ -649,6 +649,8 @@ var MODIFS = {
 	// primary
 	FO:0, AG:0, RA:0, EN:0,
 	PR:0, PE:0, IN:0, BE:0,
+	// secondary
+	SI:0, PV: 0, CH:0, PP:0,
 	// skills
 	ACR:0, COM:0, CON:0, DIS:0,
 	LAN:0, MAR:0, MEC:0, PRE:0,
@@ -663,6 +665,8 @@ var POINTS = {
 	// primary
 	FO:5, AG:5, RA:5, EN:5,
 	PR:5, PE:5, IN:5, BE:5,
+	// secondary
+	SI:0, PV: 0, CH:0, PP:0,
 	// skills
 	ACR:0, COM:0, CON:0, DIS:0,
 	LAN:0, MAR:0, MEC:0, PRE:0,
@@ -726,6 +730,8 @@ function getAttributeType(id) {
 	if (id == 'FO' || id == 'AG' || id == 'RA' || id == 'EN'
 	 || id == 'PR' || id == 'PE' || id == 'IN' || id == 'BE')
 		return 'primary';
+	if (id == 'SI' || id == 'PV' || id == 'CH' || id == 'PP')
+		return 'secondary';
 	if (isSkill(id)) return 'skill';
 	throw "Unknown attribute \""+id+"\"";
 }
@@ -769,13 +775,13 @@ function updatePCAttribute(id) {
 			PC[id] = MODIFS[id] + POINTS[id];
 			break;
 		case 'SI':
-			PC[id] = PC['EN'];
+			PC[id] = PC['EN'] + MODIFS[id];
 			break;
 		case 'PV':
-			PC[id] = 4 * PC['EN'];
+			PC[id] = 4 * PC['EN'] + MODIFS[id];
 			break;
 		case 'PP':
-			PC[id] = PC['IN'] + PC['BE'];
+			PC[id] = PC['IN'] + PC['BE'] + MODIFS[id];
 			break;
 		case 'PPE':
 			PC[id] = PC.ppe;
@@ -948,10 +954,18 @@ function initializeTribeOptions() {
 	}
 }
 
-function getSpecialCost(id) {
-	var cost = SPECIALS[id]['PPE'];
-	//TODO put PC.tribe in da mix
-	return cost;
+function updateSpecialModifs(modifs, removed) {
+	if (!modifs) return;
+	for (var i = 0; i < modifs.length; i++) {
+		var id = modifs[i]['attribute'];
+		var value = modifs[i]['modif'];
+		var condition = modifs[i]['if'];
+		if(condition) continue;//TODO later, too much hassle for now
+		if(removed) MODIFS[id] -= value;
+		else MODIFS[id] += value;
+		updatePCAttribute(id);
+		updateMinMaxAndValue(id);
+	}
 }
 
 function hideSkill(id, hidden) {
@@ -971,6 +985,12 @@ function updateSpecialSkills(skills, removed) {
 		}
 	}
 }
+
+function getSpecialCost(id) {
+	var cost = SPECIALS[id]['PPE'];
+	//TODO put PC.tribe in da mix
+	return cost;
+}
 function updateSpecialCost(id, removed) {
 	var cost = getSpecialCost(id);
 	if (removed) PC.ppe += cost;
@@ -978,6 +998,7 @@ function updateSpecialCost(id, removed) {
 }
 
 function updateSpecial(id, removed) {
+	updateSpecialModifs(SPECIALS[id]['modifs'], removed);
 	updateSpecialSkills(SPECIALS[id]['skills'], removed);
 	updateSpecialCost(id, removed);
 	updatePC();
